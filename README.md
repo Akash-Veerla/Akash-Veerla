@@ -2,8 +2,8 @@
 - 👀 I’m interested in Software Development
 - 🌱 I’m currently learning Full Stack Development
 - 📫 Reach me through my
-- Mail - akashveerla0@gmail.com
-- LinkedIn - https://www.linkedin.com/in/veerla-akash/
+  - Mail - akashveerla0@gmail.com
+  - LinkedIn - https://www.linkedin.com/in/veerla-akash/
 - 😄 Pronouns: He/Him
 
 <!---
