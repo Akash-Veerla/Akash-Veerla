@@ -1,4 +1,4 @@
-# 👋 Hi, I’m @Akash-Veerla <br>
+# 👋 Hi, I’m Akash <br>
 # 👀 I’m interested in Software Development <br>
 # 🌱 I’m currently learning Full Stack Development <hr>
 
