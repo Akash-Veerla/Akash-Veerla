@@ -4,87 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKASH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
+<body class="bg-white text-black dark:bg-black dark:text-white">
 
-    <header id="hero">
-        <nav class="navbar">
-            <div class="container">
-                <a href="#" class="nav-logo">AKASH</a>
-                <ul class="nav-menu">
-                    <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
-                    <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-                    <li class="nav-item"><a href="pages/interview_prep.html" class="nav-link">Interview Prep</a></li>
-                    <li class="nav-item"><a href="pages/dsa.html" class="nav-link">DSA</a></li>
-                </ul>
-                <button class="theme-toggle" id="theme-toggle">
-                    <i class="fas fa-moon"></i>
-                </button>
+    <nav class="sticky top-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-6">
+                <a href="#" class="text-2xl font-bold">AKASH</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#experience" class="hover:text-gray-500">Experience</a>
+                    <a href="#certifications" class="hover:text-gray-500">Certifications</a>
+                    <a href="#skills" class="hover:text-gray-500">Skills</a>
+                    <a href="#education" class="hover:text-gray-500">Education</a>
+                    <a href="pages/interview_prep.html" class="hover:text-gray-500">Interview Prep</a>
+                    <a href="pages/dsa.html" class="hover:text-gray-500">DSA</a>
+                </div>
+                <div class="flex items-center">
+                    <button id="theme-toggle" class="mr-4">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="md:hidden" id="mobile-menu-button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
-        </nav>
-        <div class="hero-content container">
-            <h1>AKASH</h1>
-            <p>Computer Science Engineering Student</p>
-            <div class="hero-buttons">
-                <a href="https://linkedin.com/in/veerla-akash" target="_blank" class="button">
+        </div>
+        <div class="hidden md:hidden" id="mobile-menu">
+            <a href="#experience" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-900">Experience</a>
+            <a href="#certifications" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-900">Certifications</a>
+            <a href="#skills" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-900">Skills</a>
+            <a href="#education" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-900">Education</a>
+            <a href="pages/interview_prep.html" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-900">Interview Prep</a>
+            <a href="pages/dsa.html" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-900">DSA</a>
+        </div>
+    </nav>
+
+    <header id="hero" class="h-screen flex items-center justify-center text-center">
+        <div class="container mx-auto px-4">
+            <h1 class="text-6xl font-bold mb-4">AKASH</h1>
+            <p class="text-2xl mb-8">Computer Science Engineering Student</p>
+            <div class="flex justify-center space-x-4">
+                <a href="https://linkedin.com/in/veerla-akash" target="_blank" class="bg-gray-200 dark:bg-gray-800 px-6 py-3 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
                     <i class="fab fa-linkedin"></i> LinkedIn
                 </a>
-                <a href="mailto:akashveerla0@gmail.com" class="button">
+                <a href="mailto:akashveerla0@gmail.com" class="bg-gray-200 dark:bg-gray-800 px-6 py-3 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">
                     <i class="fas fa-envelope"></i> Email
                 </a>
             </div>
         </div>
     </header>
 
-    <main>
-        <section id="experience" class="container glass-effect">
-            <div class="glass-effect">
-                <h2>Experience & Internships</h2>
-                <div class="experience-container">
-                    <div class="experience-card glass-effect">
-                        <h3>Team Member</h3>
-                        <p class="organization">IIT Bombay TIH-IoT Foundation</p>
+    <main class="container mx-auto px-4 py-16">
+
+        <section id="experience" class="mb-16">
+            <h2 class="text-4xl font-bold text-center mb-12">Experience & Internships</h2>
+            <div class="space-y-12">
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold">Team Member</h3>
+                    <p class="text-lg font-medium text-gray-600 dark:text-gray-400">IIT Bombay TIH-IoT Foundation | Mumbai, Maharashtra, India</p>
+                    <p class="mt-4">Developed a Bluetooth smart charger prototype and mobile app for automatic control, theoretically reducing overcharge risk by ~85% and extending battery lifespan by 12-24%. With a team of four members.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold">SmartInternz Summer Internship</h3>
+                    <p class="text-lg font-medium text-gray-600 dark:text-gray-400">Educational Organisation on ServiceNow</p>
+                    <p class="mt-4">Created a basic ServiceNow application, streamlining core administrative processes within the platform.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold">Intern</h3>
+                    <p class="text-lg font-medium text-gray-600 dark:text-gray-400">Microsoft and TechShikSha | Bangalore, Karnataka, India</p>
+                    <p class="mt-4">Collaborated with industry experts, gaining hands-on Azure AI experience.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold">Virtual Intern</h3>
+                    <p class="text-lg font-medium text-gray-600 dark:text-gray-400">SkillDzire | Hyderabad, Telangana, India</p>
+                    <p class="mt-4">Developed a Python-based ML Sentiment Analyzer prototype, streamlining product review analysis for quicker customer insights.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="mb-16">
+            <h2 class="text-4xl font-bold text-center mb-12">Certifications & Achievements</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-xl font-bold">Certified System Administrator (CSA)</h3>
+                    <p class="text-gray-600 dark:text-gray-400">ServiceNow</p>
+                    <p class="mt-4">Validated expertise in ServiceNow platform administration, streamlining IT operations.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-xl font-bold">Certified Application Developer (CAD)</h3>
+                    <p class="text-gray-600 dark:text-gray-400">ServiceNow</p>
+                    <p class="mt-4">Developed and customized ServiceNow applications, accelerating digital workflow automation.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-xl font-bold">Azure AI Document Intelligence</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Microsoft</p>
+                    <p class="mt-4">Developed intelligent document processing solutions on Azure AI to automate data extraction.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-xl font-bold">Azure AI Language</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Microsoft</p>
+                    <p class="mt-4">Built natural language processing (NLP) solutions on Azure AI to automate text-based insight extraction.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-xl font-bold">Introduction to Generative AI</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Google Cloud</p>
+                    <p class="mt-4">Gained foundational knowledge for innovative AI solutions including prompt engineering in Vertex AI.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-lg">
+                    <h3 class="text-xl font-bold">Shastra 1.0 Coding Hackathon</h3>
+                    <p class="mt-4">Finalist.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="mb-16">
+            <h2 class="text-4xl font-bold text-center mb-12">Technical Skills</h2>
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="glass-effect p-6 rounded-lg text-center">
+                    <h3 class="text-xl font-bold mb-4">Languages</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">Python</span>
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">Java</span>
                     </div>
-                    <div class="experience-card glass-effect">
-                        <h3>SmartInternz Summer Internship</h3>
-                        <p class="organization">Educational Organisation on ServiceNow</p>
+                </div>
+                <div class="glass-effect p-6 rounded-lg text-center">
+                    <h3 class="text-xl font-bold mb-4">Databases</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">MongoDB</span>
                     </div>
-                    <div class="experience-card glass-effect">
-                        <h3>Intern</h3>
-                        <p class="organization">Microsoft and TechShikSha</p>
-                    </div>
-                    <div class="experience-card glass-effect">
-                        <h3>Virtual Intern</h3>
-                        <p class="organization">SkillDzire</p>
+                </div>
+                <div class="glass-effect p-6 rounded-lg text-center">
+                    <h3 class="text-xl font-bold mb-4">Tools & Platforms</h3>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">Git</span>
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">GitHub</span>
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">Microsoft Azure</span>
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">ServiceNow</span>
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">Linux</span>
+                        <span class="bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full">Google Workspace</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="container glass-effect">
-            <div class="glass-effect">
-                <h2>Technical Skills</h2>
-                <div class="skills-container">
-                    <i class="fab fa-python skill-icon" title="Python"></i>
-                    <i class="fab fa-java skill-icon" title="Java"></i>
-                    <i class="fas fa-database skill-icon" title="MongoDB"></i>
-                    <i class="fab fa-git-alt skill-icon" title="Git"></i>
-                    <i class="fab fa-github skill-icon" title="GitHub"></i>
-                    <i class="fab fa-microsoft skill-icon" title="Microsoft Azure"></i>
-                    <i class="fas fa-cogs skill-icon" title="ServiceNow"></i>
-                    <i class="fab fa-linux skill-icon" title="Linux"></i>
-                    <i class="fab fa-google-drive skill-icon" title="Google Workspace"></i>
-                </div>
+        <section id="education" class="text-center">
+            <h2 class="text-4xl font-bold mb-8">Education</h2>
+            <div class="glass-effect p-8 rounded-lg inline-block">
+                <h3 class="text-2xl font-bold">Computer Science and Engineering</h3>
+                <p class="text-lg text-gray-600 dark:text-gray-400">2022 - 2026</p>
             </div>
         </section>
+
     </main>
 
-    <footer>
+    <footer class="text-center py-8 border-t border-gray-200 dark:border-gray-800">
         <p>&copy; 2024 AKASH. All rights reserved.</p>
     </footer>
 
