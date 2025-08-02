@@ -3,16 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Prep Hub</title>
+    <title>404 Lines of Code</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .accordion-item {
+            margin-bottom: 1rem;
+        }
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1.5rem;
+        }
+        .accordion-content p {
+            padding: 1.5rem 0;
+            white-space: pre-line;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 1000px; /* Adjust as needed */
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar glass-effect">
         <div class="container">
             <a href="../index.html" class="nav-logo">AKASH</a>
             <ul class="nav-menu">
@@ -31,7 +63,7 @@
     </nav>
 
     <main class="container">
-        <h2 class="text-center">Interview Prep Hub</h2>
+        <h2>Interview Prep Hub</h2>
         <div id="app-content">
             <!-- Content will be loaded here by JavaScript -->
         </div>
@@ -43,7 +75,6 @@
 
     <script src="../script.js"></script>
     <script>
-        // --- Data Definitions ---
         const interviewData = {
             hr: [
                 {
@@ -527,7 +558,7 @@
 
         function renderHomePage() {
             appContent.innerHTML = `
-                <div class="text-center">
+                <div class="text-center glass-effect">
                     <h2 class="text-4xl font-bold mb-8">Welcome to Your Interview Prep Hub!</h2>
                     <p class="text-lg mb-10">Select a preparation area to get started.</p>
                     <div class="flex flex-col sm:flex-row justify-center space-y-6 sm:space-y-0 sm:space-x-6">
@@ -543,13 +574,13 @@
                 <h2 class="text-3xl font-bold mb-6 text-center">HR Interview Questions</h2>
                 <div class="space-y-4">
                     ${interviewData.hr.map((item, index) => `
-                        <div class="card glass-effect">
+                        <div class="accordion-item glass-effect">
                             <div class="accordion-header" onclick="toggleAccordion(this)">
                                 <span>${index + 1}. ${item.question}</span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="accordion-content">
-                                <p class="whitespace-pre-line">${item.answer}</p>
+                                <p>${item.answer}</p>
                             </div>
                         </div>
                     `).join('')}
@@ -560,9 +591,9 @@
         function renderTechnicalPage() {
             appContent.innerHTML = `
                 <h2 class="text-3xl font-bold mb-6 text-center">Technical Interview Domains</h2>
-                <div class="grid-layout">
+                <div class="certifications-container">
                     ${Object.keys(interviewData.technical).map(skillKey => `
-                        <div class="card glass-effect cursor-pointer" onclick="navigateTo('skill_detail', '${skillKey}')">
+                        <div class="certification-card glass-effect cursor-pointer" onclick="navigateTo('skill_detail', '${skillKey}')">
                             <h3>${formatSkillName(skillKey)}</h3>
                             <p>${interviewData.technical[skillKey].length} common interview questions.</p>
                         </div>
@@ -582,13 +613,13 @@
                 <h2 class="text-3xl font-bold mb-6 text-center">${formatSkillName(skillKey)} Interview Questions</h2>
                 <div class="space-y-4">
                     ${skillData.map((item, index) => `
-                        <div class="card glass-effect">
+                        <div class="accordion-item glass-effect">
                             <div class="accordion-header" onclick="toggleAccordion(this)">
                                 <span>${index + 1}. ${item.question}</span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                             <div class="accordion-content">
-                                <p class="whitespace-pre-line">${item.answer}</p>
+                                <p>${item.answer}</p>
                             </div>
                         </div>
                     `).join('')}
@@ -609,10 +640,8 @@
         }
 
         function toggleAccordion(headerElement) {
-            const content = headerElement.nextElementSibling;
-            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
-            headerElement.querySelector('i').classList.toggle('fa-chevron-up');
-            headerElement.querySelector('i').classList.toggle('fa-chevron-down');
+            const item = headerElement.closest('.accordion-item');
+            item.classList.toggle('active');
         }
 
         function getInitialPageState() {
