@@ -3,36 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Prep</title>
+    <title>Interview Prep Hub</title>
     <link rel="stylesheet" href="../style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .interview-section {
+            margin-bottom: 3rem;
+        }
+        .interview-section h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .qa-container {
+            margin-bottom: 1.5rem;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
+
+    <nav class="navbar">
+        <div class="container">
             <a href="../index.html" class="nav-logo">AKASH</a>
-            <div class="nav-links">
-                <a href="../index.html#experience">Experience</a>
-                <a href="../index.html#skills">Skills</a>
-                <a href="interview_prep.html">Interview Prep</a>
-                <a href="dsa.html">DSA</a>
-            </div>
-            <div class="theme-switcher">
-                <input type="checkbox" id="theme-toggle">
-                <label for="theme-toggle"></label>
-            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index.html#experience" class="nav-link">Experience</a></li>
+                <li class="nav-item"><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="interview_prep.html" class="nav-link">Interview Prep</a></li>
+                <li class="nav-item"><a href="dsa.html" class="nav-link">DSA</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
     </nav>
 
     <main class="container">
-        <section id="interview-prep" class="card-container">
-            <div class="card">
-                <h2>Interview Preparation</h2>
-                <p>Coming Soon...</p>
+        <h2>Interview Prep Hub</h2>
+        <div id="app-content">
+            <div class="interview-section">
+                <h3>Technical Round (TR)</h3>
+                <div id="tr-questions"></div>
             </div>
-        </section>
+            <div class="interview-section">
+                <h3>HR</h3>
+                <div id="hr-questions"></div>
+            </div>
+        </div>
     </main>
 
+    <footer>
+        <p>&copy; 2024 AKASH. All rights reserved.</p>
+    </footer>
+
     <script src="../script.js"></script>
+    <script>
+        const interviewData = {
+            hr: [
+                {
+                    question: "Tell me about yourself?",
+                    answer: "As a Computer Science Engineering student, I bring hands-on experience in cloud and AI/ML, gained through impactful projects and internships. For instance, I developed a smart charger prototype that theoretically reduced overcharge risk by ~85% and built a Python-based ML Sentiment Analyzer. I'm also a Certified System Administrator and Application Developer for ServiceNow, demonstrating my ability to streamline IT operations and accelerate digital workflow automation. My certifications in Microsoft Azure AI and Google Cloud Generative AI further highlight my proficiency in leveraging cloud-based AI solutions. I'm passionate about continuous learning and am eager to apply my problem-solving skills to challenging software development roles in the tech industry."
+                },
+                {
+                    question: "Why do you want this job? (Assume a Software Engineer role)",
+                    answer: "I'm drawn to this Software Engineer role because it presents a significant opportunity to apply my skills in cloud technologies and AI/ML to real-world problems. I'm particularly excited about [Company Name]'s work in [mention a relevant area if known, e.g., large-scale systems, specific industry solutions] and believe my experience in developing impactful projects and my certifications align well with the technical challenges and growth opportunities here. I'm eager to contribute to a team that values innovation and continuous learning, which I see as core to this role and [Company Name]'s culture."
+                }
+            ],
+            technical: {
+                python: [
+                    { question: "Explain the difference between mutable and immutable data types in Python. Provide examples.", answer: "Mutable objects can be changed after they are created (e.g., lists, dictionaries, sets). Immutable objects cannot be changed after creation (e.g., numbers, strings, tuples)." },
+                    { question: "What is a decorator in Python? Can you give a simple example of when you might use one?", answer: "A decorator is a design pattern that allows you to modify the functionality of a function or class without changing its source code. It's often used for logging, authentication, rate limiting, etc. Example: `@my_decorator\ndef my_function(): pass`" }
+                ],
+                java: [
+                    { question: "Explain the four core principles of Object-Oriented Programming (OOP): Encapsulation, Inheritance, Polymorphism, and Abstraction.", answer: "Encapsulation: Bundling data and methods that operate on the data within a single unit (class). Inheritance: A class deriving properties and behavior from another class. Polymorphism: Objects of different classes can be treated as objects of a common type. Abstraction: Hiding complex implementation details and showing only essential features." },
+                    { question: "Differentiate between `ArrayList` and `LinkedList` in Java. When would you choose one over the other?", answer: "`ArrayList` uses a dynamic array; good for random access (get) due to index-based access, but slow for insertions/deletions in the middle. `LinkedList` uses a doubly linked list; good for frequent insertions/deletions, but slower for random access." }
+                ]
+            }
+        };
+
+        function renderQuestions(containerId, questions) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            questions.forEach(item => {
+                const qaContainer = document.createElement('div');
+                qaContainer.className = 'qa-container glass-effect';
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `<h4>${item.question}</h4>`;
+
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer';
+                answerDiv.innerHTML = `<p>${item.answer}</p>`;
+
+                qaContainer.appendChild(questionDiv);
+                qaContainer.appendChild(answerDiv);
+                container.appendChild(qaContainer);
+            });
+        }
+
+        const allTechnicalQuestions = Object.values(interviewData.technical).flat();
+
+        renderQuestions('hr-questions', interviewData.hr);
+        renderQuestions('tr-questions', allTechnicalQuestions);
+    </script>
 </body>
 </html>

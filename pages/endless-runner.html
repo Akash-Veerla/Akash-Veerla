@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endless Runner</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .runner-container { text-align: center; }
+        .game-canvas {
+            background-color: #333;
+            margin: 2rem auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar glass-effect">
+        <div class="container">
+            <a href="../index.html" class="nav-logo">AKASH</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index.html#experience" class="nav-link">Experience</a></li>
+                <li class="nav-item"><a href="../index.html#certifications" class="nav-link">Certifications</a></li>
+                <li class="nav-item"><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="../index.html#education" class="nav-link">Education</a></li>
+                <li class="nav-item"><a href="interview_prep.html" class="nav-link">Interview Prep</a></li>
+                <li class="nav-item"><a href="DSA.html" class="nav-link">DSA</a></li>
+                <li class="nav-item"><a href="games.html" class="nav-link">Games</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container runner-container">
+        <h2>Endless Runner</h2>
+        <canvas id="game-canvas" width="800" height="400"></canvas>
+        <div class="score">Score: <span id="score">0</span></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AKASH. All rights reserved.</p>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreSpan = document.getElementById('score');
+
+            let player = { x: 50, y: 350, width: 50, height: 50, lane: 1 };
+            let cop = { x: -50, y: 350, width: 50, height: 50 };
+            let obstacles = [];
+            let score = 0;
+            let gameSpeed = 5;
+
+            function drawPlayer() {
+                ctx.fillStyle = 'red';
+                ctx.fillRect(player.x, player.y, player.width, player.height);
+            }
+
+            function drawCop() {
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(cop.x, cop.y, cop.width, cop.height);
+            }
+
+            function drawObstacles() {
+                obstacles.forEach(obstacle => {
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+                });
+            }
+
+            function update() {
+                score++;
+                scoreSpan.textContent = score;
+
+                // Move obstacles
+                obstacles.forEach(obstacle => {
+                    obstacle.x -= gameSpeed;
+                });
+
+                // Remove off-screen obstacles
+                obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
+
+                // Add new obstacles
+                if (Math.random() < 0.02) {
+                    const lane = Math.floor(Math.random() * 3);
+                    obstacles.push({
+                        x: canvas.width,
+                        y: 350,
+                        width: 50,
+                        height: 50,
+                        lane: lane
+                    });
+                }
+
+                // Cop follows player
+                if (cop.x < player.x - 100) {
+                    cop.x += gameSpeed / 2;
+                }
+
+                // Check for collisions
+                obstacles.forEach(obstacle => {
+                    if (
+                        player.lane === obstacle.lane &&
+                        player.x < obstacle.x + obstacle.width &&
+                        player.x + player.width > obstacle.x
+                    ) {
+                        alert('Game Over! Your score: ' + score);
+                        resetGame();
+                    }
+                });
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawPlayer();
+                drawCop();
+                drawObstacles();
+                requestAnimationFrame(update);
+            }
+
+            function resetGame() {
+                player = { x: 50, y: 350, width: 50, height: 50, lane: 1 };
+                cop = { x: -50, y: 350, width: 50, height: 50 };
+                obstacles = [];
+                score = 0;
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' && player.lane > 0) {
+                    player.lane--;
+                    player.x -= 100;
+                }
+                if (e.key === 'ArrowRight' && player.lane < 2) {
+                    player.lane++;
+                    player.x += 100;
+                }
+            });
+
+            update();
+        });
+    </script>
+</body>
+</html>
