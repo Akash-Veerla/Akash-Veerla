@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Rubik's Cube Solver</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+            background-color: #2c2c2c;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1rem;
+            max-width: 600px;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+        }
+
+        .cube-and-controls {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+        }
+        
+        .setup-section, .solve-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .solve-section {
+            display: none; /* Initially hidden */
+        }
+        
+        .cube-container-2d {
+            display: grid;
+            grid-template-areas:
+                ". top ."
+                "left front right"
+                ". bottom ."
+                ". back .";
+            gap: 2px;
+            background-color: #333;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            transform: scale(0.8);
+        }
+
+        .face {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            padding: 5px;
+            background-color: #333;
+            border: 2px solid #222;
+        }
+
+        .face.top    { grid-area: top; }
+        .face.front  { grid-area: front; }
+        .face.left   { grid-area: left; }
+        .face.right  { grid-area: right; }
+        .face.back   { grid-area: back; }
+        .face.bottom { grid-area: bottom; }
+
+        .sticker {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #1a1a1a;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .sticker.center {
+            cursor: default;
+        }
+        
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 8px;
+        }
+
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 2px solid #555;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .color-box.selected {
+            border-color: #fff;
+            box-shadow: 0 0 8px #fff;
+            transform: scale(1.1);
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 250px;
+        }
+        
+        .controls-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .controls .btn {
+            background-color: #444;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            outline: none;
+            width: 100%;
+        }
+        
+        .controls-row .btn {
+            width: 50%;
+        }
+
+        .controls .btn:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .controls .btn:disabled {
+            background-color: #333;
+            color: #888;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .controls .btn.start-solve, .controls .btn.scramble-cube {
+            background-color: #007BFF;
+        }
+        
+        .controls .btn.start-solve:hover, .controls .btn.scramble-cube:hover {
+            background-color: #0069d9;
+        }
+
+        .controls .btn.next-step {
+            background-color: #4CAF50;
+        }
+        
+        .controls .btn.next-step:hover {
+            background-color: #45a049;
+        }
+        
+        .controls .btn.secondary {
+            background-color: #555;
+        }
+        
+        .controls .btn.secondary:hover {
+            background-color: #666;
+        }
+
+        .instruction-box {
+            background-color: #333;
+            color: #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: left;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+        }
+        
+        .instruction-box h3 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .instruction-box p {
+            margin: 0 0 10px 0;
+            text-align: left;
+        }
+
+        .instruction-box code {
+            background-color: #444;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #FFD700;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (max-width: 768px) {
+            .cube-and-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cube-container-2d {
+                transform: scale(0.9);
+            }
+            .controls {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Interactive Rubik's Cube Solver</h1>
+        <p>Enter the colors of your scrambled cube or click 'Scramble Cube' to get a new one. Then, follow the step-by-step instructions to solve it!</p>
+
+        <div class="cube-and-controls">
+            <!-- Manual Input Section -->
+            <div class="setup-section" id="setupSection">
+                <div id="cubeContainer2D" class="cube-container-2d">
+                    <!-- Faces will be dynamically added here -->
+                </div>
+                <div class="color-palette" id="colorPalette">
+                    <!-- Colors will be dynamically added here -->
+                </div>
+                <div class="controls">
+                    <button class="btn start-solve" onclick="startSolving()">Start Solving</button>
+                    <button class="btn scramble-cube" onclick="scrambleCubeAndSolve()">Scramble Cube</button>
+                    <button class="btn secondary" onclick="resetCube()">Reset</button>
+                </div>
+            </div>
+
+            <!-- Solving Section -->
+            <div class="solve-section" id="solveSection">
+                <div id="solveCubeContainer2D" class="cube-container-2d">
+                    <!-- Faces will be dynamically added here -->
+                </div>
+                <div class="controls">
+                    <div class="instruction-box" id="instructionBox">
+                        <h3>Instructions</h3>
+                        <p id="simpleInstruction">Click "Next Step" to begin solving the cube.</p>
+                        <p id="detailedInstruction"></p>
+                        <p id="currentMove"></p>
+                    </div>
+                    <div class="controls-row">
+                        <button class="btn" id="prevStepBtn" onclick="previousStep()">Previous Step</button>
+                        <button class="btn next-step" id="nextStepBtn" onclick="nextStep()">Next Step</button>
+                    </div>
+                    <button class="btn secondary" onclick="showHome()">Home</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageBox" class="message-box"></div>
+
+    <script>
+        // Use a more accessible color palette
+        const COLORS = {
+            'white': '#ffffff',
+            'yellow': '#ffd700',
+            'red': '#ff0000',
+            'orange': '#ff8c00',
+            'blue': '#0000ff',
+            'green': '#008000',
+        };
+        const COLOR_NAMES = ['white', 'yellow', 'red', 'orange', 'blue', 'green'];
+        const FACES = ['front', 'back', 'top', 'bottom', 'left', 'right'];
+        const ALL_MOVES = ['U', 'U_prime', 'D', 'D_prime', 'R', 'R_prime', 'L', 'L_prime', 'F', 'F_prime', 'B', 'B_prime'];
+        const SCRAMBLE_LENGTH = 25;
+
+        let cubeState = {};
+        let solvedCubeState = {};
+        let selectedColor = 'white';
+        let setupSection, solveSection;
+        let instructionBox, simpleInstruction, detailedInstruction, currentMoveDisplay;
+        let solvingSteps = [];
+        let currentStepIndex = -1;
+
+        // --- UI Initialization ---
+        function initializeUI() {
+            setupSection = document.getElementById('setupSection');
+            solveSection = document.getElementById('solveSection');
+            instructionBox = document.getElementById('instructionBox');
+            simpleInstruction = document.getElementById('simpleInstruction');
+            detailedInstruction = document.getElementById('detailedInstruction');
+            currentMoveDisplay = document.getElementById('currentMove');
+            
+            createCubeGrid('cubeContainer2D', true); // Create interactive cube for input
+            createCubeGrid('solveCubeContainer2D', false); // Create passive cube for solving display
+            createColorPalette();
+            resetCubeState();
+            updateCubeDisplay();
+            updateNavigationButtons();
+        }
+
+        // Creates a 2D cube grid and attaches event listeners if interactive
+        function createCubeGrid(containerId, isInteractive) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            FACES.forEach(faceName => {
+                const face = document.createElement('div');
+                face.className = `face ${faceName}`;
+                face.dataset.face = faceName;
+                for (let i = 0; i < 9; i++) {
+                    const sticker = document.createElement('div');
+                    sticker.className = `sticker ${i === 4 ? 'center' : ''}`;
+                    sticker.dataset.index = i;
+                    if (isInteractive && i !== 4) {
+                        sticker.addEventListener('click', handleStickerClick);
+                    }
+                    face.appendChild(sticker);
+                }
+                container.appendChild(face);
+            });
+        }
+        
+        // Creates the color palette for manual input
+        function createColorPalette() {
+            const palette = document.getElementById('colorPalette');
+            palette.innerHTML = '';
+            COLOR_NAMES.forEach(color => {
+                const colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = COLORS[color];
+                colorBox.dataset.color = color;
+                colorBox.addEventListener('click', handleColorPaletteClick);
+                palette.appendChild(colorBox);
+            });
+            // Select the initial color
+            document.querySelector(`[data-color="${selectedColor}"]`).classList.add('selected');
+        }
+
+        // Event handler for selecting a color
+        function handleColorPaletteClick(event) {
+            const oldSelected = document.querySelector('.color-box.selected');
+            if (oldSelected) oldSelected.classList.remove('selected');
+            selectedColor = event.target.dataset.color;
+            event.target.classList.add('selected');
+        }
+
+        // Event handler for clicking a sticker to change its color
+        function handleStickerClick(event) {
+            const sticker = event.target;
+            const face = sticker.parentElement.dataset.face;
+            const index = sticker.dataset.index;
+            cubeState[face][index] = selectedColor;
+            updateCubeDisplay();
+        }
+
+        // Resets the cube to a solved state for fresh input
+        function resetCubeState() {
+            solvedCubeState = {
+                'front': ['green', 'green', 'green', 'green', 'green', 'green', 'green', 'green', 'green'],
+                'back': ['blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue'],
+                'top': ['white', 'white', 'white', 'white', 'white', 'white', 'white', 'white', 'white'],
+                'bottom': ['yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow'],
+                'left': ['orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange'],
+                'right': ['red', 'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red']
+            };
+            cubeState = JSON.parse(JSON.stringify(solvedCubeState));
+        }
+
+        // Updates the visual display of the cube based on the cubeState array
+        function updateCubeDisplay() {
+            FACES.forEach(faceName => {
+                const setupFaceElement = document.querySelector(`#cubeContainer2D .face.${faceName}`);
+                const solveFaceElement = document.querySelector(`#solveCubeContainer2D .face.${faceName}`);
+                if (setupFaceElement) {
+                  const stickers = setupFaceElement.querySelectorAll('.sticker');
+                  cubeState[faceName].forEach((color, index) => {
+                      stickers[index].style.backgroundColor = COLORS[color];
+                  });
+                }
+                if (solveFaceElement) {
+                  const solveStickers = solveFaceElement.querySelectorAll('.sticker');
+                  cubeState[faceName].forEach((color, index) => {
+                      solveStickers[index].style.backgroundColor = COLORS[color];
+                  });
+                }
+            });
+        }
+        
+        // --- Core Application Flow ---
+        function startSolving() {
+            // Check if the cube is already solved
+            if (isSolved()) {
+                showMessage("The cube is already solved!", 3000);
+                return;
+            }
+
+            // 1. Validate the cube state
+            if (!validateCubeState()) {
+                showMessage("Invalid cube state. Please ensure you have 9 stickers of each color.", 5000);
+                return;
+            }
+
+            // 2. Generate the full solution
+            solvingSteps = generateSolution();
+            currentStepIndex = -1; // Start before the first step
+            
+            // 3. Switch to solve view
+            setupSection.style.display = 'none';
+            solveSection.style.display = 'flex';
+            
+            // 4. Start the solving process
+            updateUIForStep();
+        }
+        
+        function nextStep() {
+            if (currentStepIndex < solvingSteps.length - 1) {
+                currentStepIndex++;
+                const step = solvingSteps[currentStepIndex];
+                if (step.move) {
+                    applyMove(step.move);
+                }
+                updateUIForStep();
+
+                if (isSolved()) {
+                    showMessage("Congratulations! The cube is solved!", 5000);
+                    document.getElementById('nextStepBtn').disabled = true;
+                }
+            } else {
+                showMessage("You have reached the end of this guide.", 2000);
+            }
+        }
+        
+        function previousStep() {
+            if (currentStepIndex > -1) {
+                const step = solvingSteps[currentStepIndex];
+                if (step.move) {
+                    const inverseMove = getInverseMove(step.move);
+                    applyMove(inverseMove);
+                }
+                currentStepIndex--;
+                updateUIForStep();
+
+                // Re-enable the next step button if we move back from a solved state
+                document.getElementById('nextStepBtn').disabled = false;
+            } else {
+                showMessage("You are at the beginning of the solution.", 2000);
+            }
+        }
+        
+        function getInverseMove(move) {
+            switch(move) {
+                case 'U': return 'U_prime';
+                case 'U_prime': return 'U';
+                case 'D': return 'D_prime';
+                case 'D_prime': return 'D';
+                case 'R': return 'R_prime';
+                case 'R_prime': return 'R';
+                case 'L': return 'L_prime';
+                case 'L_prime': return 'L';
+                case 'F': return 'F_prime';
+                case 'F_prime': return 'F';
+                case 'B': return 'B_prime';
+                case 'B_prime': return 'B';
+                default: return null;
+            }
+        }
+
+        function updateUIForStep() {
+            const prevBtn = document.getElementById('prevStepBtn');
+            const nextBtn = document.getElementById('nextStepBtn');
+
+            // Disable/Enable buttons based on current step
+            prevBtn.disabled = currentStepIndex <= -1;
+            nextBtn.disabled = currentStepIndex >= solvingSteps.length - 1 || isSolved();
+
+            if (currentStepIndex === -1) {
+                // Initial state before solving starts
+                simpleInstruction.textContent = "Click 'Next Step' to begin solving the cube.";
+                detailedInstruction.textContent = "This will apply the first move of the solution.";
+                currentMoveDisplay.innerHTML = "";
+            } else {
+                const step = solvingSteps[currentStepIndex];
+                
+                updateCubeDisplay();
+                
+                // Update instructions
+                simpleInstruction.textContent = step.simpleText;
+                detailedInstruction.textContent = step.detailedText;
+                currentMoveDisplay.innerHTML = step.move ? `Move: <code>${step.move}</code>` : '';
+            }
+
+            if (isSolved()) {
+                showMessage("The cube is now solved!", 5000);
+                nextBtn.disabled = true;
+            }
+        }
+        
+        function showHome() {
+            // Return to the setup screen
+            setupSection.style.display = 'flex';
+            solveSection.style.display = 'none';
+            updateNavigationButtons();
+            // Reset the cube to the solved state to prevent confusion
+            resetCubeState();
+            updateCubeDisplay();
+        }
+
+        function resetCube() {
+            resetCubeState();
+            updateCubeDisplay();
+            showHome();
+            showMessage("Cube state has been reset.", 2000);
+        }
+        
+        function scrambleCubeAndSolve() {
+            resetCubeState(); // Start from a solved state
+            
+            // Generate a random scramble of SCRAMBLE_LENGTH moves
+            const tempCubeState = JSON.parse(JSON.stringify(cubeState));
+            const scrambleMoves = [];
+            for (let i = 0; i < SCRAMBLE_LENGTH; i++) {
+                const randomMove = ALL_MOVES[Math.floor(Math.random() * ALL_MOVES.length)];
+                scrambleMoves.push(randomMove);
+                applyMove(randomMove);
+            }
+            
+            updateCubeDisplay();
+            startSolving();
+        }
+        
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevStepBtn');
+            const nextBtn = document.getElementById('nextStepBtn');
+            if (prevBtn) prevBtn.disabled = true;
+            if (nextBtn) nextBtn.disabled = false;
+        }
+
+        // --- Core Solving Algorithm Logic ---
+        function generateSolution() {
+            // This is a simplified educational guide for the first few steps of solving.
+            let solutionSteps = [];
+            solutionSteps.push({
+                simpleText: "Step 1: Solve the White Cross.",
+                detailedText: "The first step is to create a white cross on the top face, with each edge piece matching its adjacent center piece. Use F, R, U, D moves to move the white edges into position.",
+                move: null
+            });
+            solutionSteps.push({
+                simpleText: "Step 2: Solve the White Corners.",
+                detailedText: "Next, we solve the white corners. Find each white corner piece and use the F, R, U, D moves to move them into their correct positions on the top layer.",
+                move: null
+            });
+            solutionSteps.push({
+                simpleText: "Step 3: Solve the Middle Layer.",
+                detailedText: "The middle layer is solved by placing the four edge pieces into their correct spots. Look for an edge piece on the bottom layer that doesn't have yellow, and move it to its correct position.",
+                move: null
+            });
+            return solutionSteps;
+        }
+
+
+        // Checks if the current cube state matches the solved state
+        function isSolved() {
+            for (const face of FACES) {
+                for (let i = 0; i < 9; i++) {
+                    if (cubeState[face][i] !== solvedCubeState[face][i]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        
+        // This is the core move engine.
+        function applyMove(move) {
+            // Deep copy to avoid mutation issues
+            const newState = JSON.parse(JSON.stringify(cubeState));
+            let tempRow, tempCol;
+            
+            switch (move) {
+                case 'U': // Top face clockwise
+                    newState.top = rotateFaceClockwise(newState.top);
+                    tempRow = newState.front.slice(0, 3);
+                    newState.front.splice(0, 3, ...newState.right.slice(0, 3));
+                    newState.right.splice(0, 3, ...newState.back.slice(0, 3));
+                    newState.back.splice(0, 3, ...newState.left.slice(0, 3));
+                    newState.left.splice(0, 3, ...tempRow);
+                    break;
+                case 'U_prime': // Top face counter-clockwise
+                    newState.top = rotateFaceCounterClockwise(newState.top);
+                    tempRow = newState.front.slice(0, 3);
+                    newState.front.splice(0, 3, ...newState.left.slice(0, 3));
+                    newState.left.splice(0, 3, ...newState.back.slice(0, 3));
+                    newState.back.splice(0, 3, ...newState.right.slice(0, 3));
+                    newState.right.splice(0, 3, ...tempRow);
+                    break;
+                case 'D': // Bottom face clockwise
+                    newState.bottom = rotateFaceClockwise(newState.bottom);
+                    tempRow = newState.front.slice(6, 9);
+                    newState.front.splice(6, 3, ...newState.left.slice(6, 9));
+                    newState.left.splice(6, 3, ...newState.back.slice(6, 9));
+                    newState.back.splice(6, 3, ...newState.right.slice(6, 9));
+                    newState.right.splice(6, 3, ...tempRow);
+                    break;
+                case 'D_prime': // Bottom face counter-clockwise
+                    newState.bottom = rotateFaceCounterClockwise(newState.bottom);
+                    tempRow = newState.front.slice(6, 9);
+                    newState.front.splice(6, 3, ...newState.right.slice(6, 9));
+                    newState.right.splice(6, 3, ...newState.back.slice(6, 9));
+                    newState.back.splice(6, 3, ...newState.left.slice(6, 9));
+                    newState.left.splice(6, 3, ...tempRow);
+                    break;
+                case 'R': // Right face clockwise
+                    newState.right = rotateFaceClockwise(newState.right);
+                    tempCol = [newState.front[2], newState.front[5], newState.front[8]];
+                    newState.front[2] = newState.bottom[2];
+                    newState.front[5] = newState.bottom[5];
+                    newState.front[8] = newState.bottom[8];
+                    newState.bottom[2] = newState.back[6];
+                    newState.bottom[5] = newState.back[3];
+                    newState.bottom[8] = newState.back[0];
+                    newState.back[6] = newState.top[2];
+                    newState.back[3] = newState.top[5];
+                    newState.back[0] = newState.top[8];
+                    newState.top[2] = tempCol[0];
+                    newState.top[5] = tempCol[1];
+                    newState.top[8] = tempCol[2];
+                    break;
+                case 'R_prime': // Right face counter-clockwise
+                    newState.right = rotateFaceCounterClockwise(newState.right);
+                    tempCol = [newState.front[2], newState.front[5], newState.front[8]];
+                    newState.front[2] = newState.top[2];
+                    newState.front[5] = newState.top[5];
+                    newState.front[8] = newState.top[8];
+                    newState.top[2] = newState.back[6];
+                    newState.top[5] = newState.back[3];
+                    newState.top[8] = newState.back[0];
+                    newState.back[6] = newState.bottom[2];
+                    newState.back[3] = newState.bottom[5];
+                    newState.back[0] = newState.bottom[8];
+                    newState.bottom[2] = tempCol[0];
+                    newState.bottom[5] = tempCol[1];
+                    newState.bottom[8] = tempCol[2];
+                    break;
+                case 'L': // Left face clockwise
+                    newState.left = rotateFaceClockwise(newState.left);
+                    tempCol = [newState.front[0], newState.front[3], newState.front[6]];
+                    newState.front[0] = newState.top[0];
+                    newState.front[3] = newState.top[3];
+                    newState.front[6] = newState.top[6];
+                    newState.top[0] = newState.back[8];
+                    newState.top[3] = newState.back[5];
+                    newState.top[6] = newState.back[2];
+                    newState.back[8] = newState.bottom[0];
+                    newState.back[5] = newState.bottom[3];
+                    newState.back[2] = newState.bottom[6];
+                    newState.bottom[0] = tempCol[0];
+                    newState.bottom[3] = tempCol[1];
+                    newState.bottom[6] = tempCol[2];
+                    break;
+                case 'L_prime': // Left face counter-clockwise
+                    newState.left = rotateFaceCounterClockwise(newState.left);
+                    tempCol = [newState.front[0], newState.front[3], newState.front[6]];
+                    newState.front[0] = newState.bottom[0];
+                    newState.front[3] = newState.bottom[3];
+                    newState.front[6] = newState.bottom[6];
+                    newState.bottom[0] = newState.back[8];
+                    newState.bottom[3] = newState.back[5];
+                    newState.bottom[6] = newState.back[2];
+                    newState.back[8] = newState.top[0];
+                    newState.back[5] = newState.top[3];
+                    newState.back[2] = newState.top[6];
+                    newState.top[0] = tempCol[0];
+                    newState.top[3] = tempCol[1];
+                    newState.top[6] = tempCol[2];
+                    break;
+                case 'F': // Front face clockwise
+                    newState.front = rotateFaceClockwise(newState.front);
+                    tempCol = [newState.top[6], newState.top[7], newState.top[8]];
+                    newState.top[6] = newState.left[8];
+                    newState.top[7] = newState.left[5];
+                    newState.top[8] = newState.left[2];
+                    newState.left[8] = newState.bottom[2];
+                    newState.left[5] = newState.bottom[1];
+                    newState.left[2] = newState.bottom[0];
+                    newState.bottom[2] = newState.right[0];
+                    newState.bottom[1] = newState.right[3];
+                    newState.bottom[0] = newState.right[6];
+                    newState.right[0] = tempCol[0];
+                    newState.right[3] = tempCol[1];
+                    newState.right[6] = tempCol[2];
+                    break;
+                case 'F_prime': // Front face counter-clockwise
+                    newState.front = rotateFaceCounterClockwise(newState.front);
+                    tempCol = [newState.top[6], newState.top[7], newState.top[8]];
+                    newState.top[6] = newState.right[0];
+                    newState.top[7] = newState.right[3];
+                    newState.top[8] = newState.right[6];
+                    newState.right[0] = newState.bottom[2];
+                    newState.right[3] = newState.bottom[1];
+                    newState.right[6] = newState.bottom[0];
+                    newState.bottom[2] = newState.left[8];
+                    newState.bottom[1] = newState.left[5];
+                    newState.bottom[0] = newState.left[2];
+                    newState.left[8] = tempCol[0];
+                    newState.left[5] = tempCol[1];
+                    newState.left[2] = tempCol[2];
+                    break;
+                case 'B': // Back face clockwise
+                    newState.back = rotateFaceClockwise(newState.back);
+                    tempCol = [newState.top[0], newState.top[1], newState.top[2]];
+                    newState.top[0] = newState.right[2];
+                    newState.top[1] = newState.right[5];
+                    newState.top[2] = newState.right[8];
+                    newState.right[2] = newState.bottom[8];
+                    newState.right[5] = newState.bottom[7];
+                    newState.right[8] = newState.bottom[6];
+                    newState.bottom[8] = newState.left[6];
+                    newState.bottom[7] = newState.left[3];
+                    newState.bottom[6] = newState.left[0];
+                    newState.left[6] = tempCol[0];
+                    newState.left[3] = tempCol[1];
+                    newState.left[0] = tempCol[2];
+                    break;
+                case 'B_prime': // Back face counter-clockwise
+                    newState.back = rotateFaceCounterClockwise(newState.back);
+                    tempCol = [newState.top[0], newState.top[1], newState.top[2]];
+                    newState.top[0] = newState.left[6];
+                    newState.top[1] = newState.left[3];
+                    newState.top[2] = newState.left[0];
+                    newState.left[6] = newState.bottom[8];
+                    newState.left[3] = newState.bottom[7];
+                    newState.left[0] = newState.bottom[6];
+                    newState.bottom[8] = newState.right[2];
+                    newState.bottom[7] = newState.right[5];
+                    newState.bottom[6] = newState.right[8];
+                    newState.right[2] = tempCol[0];
+                    newState.right[5] = tempCol[1];
+                    newState.right[8] = tempCol[2];
+                    break;
+            }
+            cubeState = newState;
+        }
+
+        function rotateFaceClockwise(face) {
+            return [face[6], face[3], face[0], face[7], face[4], face[1], face[8], face[5], face[2]];
+        }
+        
+        function rotateFaceCounterClockwise(face) {
+            return [face[2], face[5], face[8], face[1], face[4], face[7], face[0], face[3], face[6]];
+        }
+        
+        // --- Validation ---
+        function validateCubeState() {
+            const counts = {};
+            for (const color of COLOR_NAMES) {
+                counts[color] = 0;
+            }
+            
+            for (const face in cubeState) {
+                for (const color of cubeState[face]) {
+                    counts[color] = (counts[color] || 0) + 1;
+                }
+            }
+            
+            for (const color in counts) {
+                if (counts[color] !== 9) {
+                    console.error(`Invalid number of ${color} stickers: ${counts[color]}`);
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        // --- Utility Functions ---
+        function showMessage(message, duration = 2000) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.classList.add('show');
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, duration);
+        }
+
+        window.onload = initializeUI;
+    </script>
+</body>
+</html>
