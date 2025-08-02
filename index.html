@@ -1,692 +1,157 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akash's Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>404 Lines of Code</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Modern Minimal Color Scheme */
-        :root {
-            --bg-primary: #FFFFFF; /* Pure white background */
-            --bg-secondary: #FFFFFF; /* Pure white for nav/card backgrounds */
-            --text-primary: #374151; /* Dark gray for main text */
-            --text-secondary: #6B7280; /* Medium gray for secondary text */
-            --accent-main: #10B981; /* Vibrant Teal accent */
-            --border-light: #E5E7EB; /* Lighter gray border */
-
-            /* Distinct Colors for Headings/Cards (modern, playful, professional) */
-            --distinct-color-1: #10B981; /* Teal */
-            --distinct-color-2: #6366F1; /* Indigo */
-            --distinct-color-3: #F97316; /* Orange */
-            --distinct-color-4: #EC4899; /* Pink */
-            --distinct-color-5: #3B82F6; /* Blue */
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif; /* Stylish bold font */
-            background-color: var(--bg-primary);
-            color: var(--text-primary); /* Default text color for body */
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        h1, h2, h3 {
-            color: var(--accent-main); /* Headings use the accent teal by default, overridden by JS for cycling */
-            transition: color 0.3s ease;
-        }
-        p, li, time {
-            color: var(--text-secondary); /* Secondary text for paragraphs */
-            transition: color 0.3s ease;
-        }
-
-        .nav-bg { background-color: rgba(255, 255, 255, 0.95); } /* Semi-transparent white */
-        .text-nav { color: var(--text-secondary); }
-        .hover\:text-accent:hover { color: var(--accent-main); }
-
-
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
-        
-        /* Timeline hover indicator */
-        .timeline-indicator {
-            position: absolute;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            left: -0.5rem; /* Align with the border line */
-            background-color: #000000; /* Black color for the indicator */
-            border: 3px solid var(--bg-primary);
-            transition: top 0.3s ease-out, opacity 0.3s ease-out;
-            opacity: 0; /* Initially hidden */
-            z-index: 10; /* Ensure it's above the line */
-        }
-
-        /* Flip Card Styles */
-        .flip-card {
-            background-color: transparent;
-            width: 100%;
-            height: 180px; /* Made bigger */
-            perspective: 1000px; /* For 3D effect */
-            cursor: pointer;
-        }
-
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-
-        .flip-card.flipped .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden; /* Safari */
-            backface-visibility: hidden;
-            border-radius: 0.5rem; /* Tailwind rounded-lg */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind shadow-md */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-        }
-
-        .flip-card-front {
-            background-color: rgba(255, 255, 255, 0.9); /* Lighter transparent white for card fronts */
-            border-left: 4px solid;
-            color: var(--text-primary); /* Darker text color for front */
-        }
-        
-        .flip-card-back {
-            color: white; /* Default text color for back of the card, will be overridden by JS for safety */
-            transform: rotateY(180deg);
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        /* Style for social media logos */
-        .social-logo {
-            width: 24px; /* Equivalent to w-6 */
-            height: 24px; /* Equivalent to h-6 */
-            object-fit: contain; /* Ensures the entire image is visible */
-        }
-        /* Specific colors for workshop/achievement icons */
-        .icon-color-1 { color: var(--distinct-color-1); } /* Teal */
-        .icon-color-2 { color: var(--distinct-color-2); } /* Indigo */
-        .icon-color-3 { color: var(--distinct-color-3); } /* Orange */
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="antialiased">
+<body>
 
-    <nav id="navbar" class="sticky top-0 z-50 nav-bg shadow-md transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <span class="text-xl font-bold" style="color: var(--text-primary);">Akash Veerla</span>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#summary" class="nav-link text-nav hover:text-accent px-3 py-2 rounded-md text-sm font-medium">Summary</a>
-                        <a href="#education" class="nav-link text-nav hover:text-accent px-3 py-2 rounded-md text-sm font-medium">Education</a>
-                        <a href="#experience" class="nav-link text-nav hover:text-accent px-3 py-2 rounded-md text-sm font-medium">Experience</a>
-                        <a href="#skills" class="nav-link text-nav hover:text-accent px-3 py-2 rounded-md text-sm font-medium">Skills</a>
-                        <a href="#credentials" class="nav-link text-nav hover:text-accent px-3 py-2 rounded-md text-sm font-medium">Credentials</a>
-                        <a href="pages/interview_prep.html" class="nav-link text-nav hover:text-accent px-3 py-2 rounded-md text-sm font-medium">Interview Prep</a>
-                        <a href="pages/DSA.html" class="nav-link text-nav hover:text-accent px-3 py-2 rounded-md text-sm font-medium">DSA Prep</a>
-                    </div>
-                </div>
-                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-nav focus:outline-none focus:ring-2 focus:ring-inset" style="--tw-ring-color: var(--accent-main);">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                        </svg>
-                    </button>
-                </div>
+    <header id="hero">
+        <nav class="navbar">
+            <div class="container">
+                <a href="#" class="nav-logo">AKASH</a>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#experience" class="nav-link">Experience</a></li>
+                    <li class="nav-item"><a href="#certifications" class="nav-link">Certifications</a></li>
+                    <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+                    <li class="nav-item"><a href="#education" class="nav-link">Education</a></li>
+                    <li class="nav-item"><a href="pages/interview_prep.html" class="nav-link">Interview Prep</a></li>
+                    <li class="nav-item"><a href="pages/DSA.html" class="nav-link">DSA</a></li>
+                    <li class="nav-item"><a href="pages/games.html" class="nav-link">Games</a></li>
+                </ul>
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
-        </div>
-        <div id="mobile-menu" class="md:hidden hidden nav-bg">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                 <a href="#summary" class="block text-nav hover:text-accent px-3 py-2 rounded-md text-base font-medium">Summary</a>
-                 <a href="#education" class="block text-nav hover:text-accent px-3 py-2 rounded-md text-base font-medium">Education</a>
-                 <a href="#experience" class="block text-nav hover:text-accent px-3 py-2 rounded-md text-base font-medium">Experience</a>
-                 <a href="#skills" class="block text-nav hover:text-accent px-3 py-2 rounded-md text-base font-medium">Skills</a>
-                 <a href="#credentials" class="block text-nav hover:text-accent px-3 py-2 rounded-md text-base font-medium">Credentials</a>
-                 <a href="pages/interview_prep.html" class="block text-nav hover:text-accent px-3 py-2 rounded-md text-base font-medium">Interview Prep</a>
-                 <a href="pages/DSA.html" class="block text-nav hover:text-accent px-3 py-2 rounded-md text-base font-medium">DSA Prep</a>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-
-<!--          Summary Section  -->
-        <section id="summary" class="mb-24 pt-16 -mt-16"> <!-- Added pt and negative mt for scroll offset -->
-            <div class="text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold" data-color-index="0">Akash Veerla</h1>
-                <p id="career-summary-text" class="mt-4 max-w-2xl mx-auto text-lg" style="color: var(--text-secondary);">
-                    A Computer Science student with hands-on experience in Microsoft Azure and ServiceNow. Eager to contribute to innovative teams and grow expertise in full-stack development and ServiceNow platform solutions.
-                </p>
-            </div>
-            <div class="mt-8 flex justify-center space-x-6">
-                <a href="mailto:akashveerla0@gmail.com" target="_blank" class="flex items-center justify-center">
-                    <span class="sr-only">Email</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail Logo" class="social-logo" onerror="this.onerror=null;this.src='https://placehold.co/24x24/cccccc/000000?text=Mail'">
+        </nav>
+        <div class="hero-content container">
+            <h1>AKASH</h1>
+            <p>Computer Science Engineering Student</p>
+            <div class="hero-buttons">
+                <a href="https://linkedin.com/in/veerla-akash" target="_blank" class="button">
+                    <i class="fab fa-linkedin"></i> LinkedIn
                 </a>
-                <a href="https://linkedin.com/in/veerla-akash/" target="_blank" class="flex items-center justify-center">
-                    <span class="sr-only">LinkedIn</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Logo" class="social-logo" onerror="this.onerror=null;this.src='https://placehold.co/24x24/cccccc/000000?text=LI'">
-                </a>
-                <a href="https://github.com/Akash-Veerla/" target="_blank" class="flex items-center justify-center">
-                    <span class="sr-only">GitHub</span>
-                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="social-logo" onerror="this.onerror=null;this.src='https://placehold.co/24x24/cccccc/000000?text=GH'">
+                <a href="mailto:akashveerla0@gmail.com" class="button">
+                    <i class="fas fa-envelope"></i> Email
                 </a>
             </div>
-        </section>
-        
-        <div id="education" class="text-center mb-16 pt-16 -mt-16"> <!-- Added pt and negative mt for scroll offset -->
-            <h2 class="text-3xl font-bold tracking-tight" data-color-index="1">Education</h2>
-             <p class="mt-3 max-w-2xl mx-auto text-xl" style="color: var(--text-secondary);">
-                Bachelor of Technology in Computer Science and Engineering <br>
-                <span class="font-normal text-lg" style="color: var(--text-secondary);">Ramachandra College of Engineering, Eluru | 2022 – 2026 (CGPA: 8.0 / 10)</span>
-            </p>
         </div>
+    </header>
 
-
-<!--          Experience Timeline  -->
-        <section id="experience" class="mb-24 pt-16 -mt-16"> <!-- Added pt and negative mt for scroll offset -->
-            <h2 class="text-3xl font-bold tracking-tight text-center" data-color-index="2">Experience Timeline</h2>
-            <p class="mt-3 max-w-2xl mx-auto text-center text-xl" style="color: var(--text-secondary);">
-<!--                A timeline of my key projects and internships. -->
-            </p>
-            <div class="mt-12 relative border-l-2 border-[var(--border-light)] ml-4 md:ml-0">
-<!--                  Timeline hover indicator  -->
-                <div id="timeline-hover-indicator" class="timeline-indicator"></div>
-
-<!--                  Project: Magno Charge  -->
-                <div class="mb-10 ml-8 timeline-item">
-                    <h3 class="text-lg font-semibold" data-color-index="0">Project: Magno Charge (Team)</h3>
-                    <time class="block mb-2 text-sm font-normal leading-none" style="color: var(--text-secondary);">Duration: December 2024 – October 2025</time>
-                    <p class="text-base font-normal" style="color: var(--text-secondary);">Developing a Bluetooth-based smart charger, funded by IIT Bombay’s TIH-IoT Foundation (₹4.8 Lakhs), to prevent mobile overcharging.</p>
+    <main>
+        <section id="experience" class="container">
+            <h2>Experience & Internships</h2>
+            <div class="experience-container">
+                <div class="experience-card">
+                    <h3>Team Member</h3>
+                    <p class="organization">IIT Bombay TIH-IoT Foundation</p>
+                    <p class="location">Mumbai, Maharashtra, India</p>
+                    <p class="description">Developed a Bluetooth smart charger prototype and mobile app for automatic control, theoretically reducing overcharge risk by ~85% and extending battery lifespan by 12-24%. With a team of four members.</p>
                 </div>
-<!--                  Project: Travel Journal  -->
-                <div class="mb-10 ml-8 timeline-item">
-                    <h3 class="text-lg font-semibold" data-color-index="1">Project: Travel Journal Web App (Solo Project)</h3>
-                    <time class="block mb-2 text-sm font-normal leading-none" style="color: var(--text-secondary);">Duration: April 2025</time>
-                    <p class="text-base font-normal" style="color: var(--text-secondary);">Developing a React-based Travel Journal App featuring user authentication and open-source map routing system.</p>
+                <div class="experience-card">
+                    <h3>SmartInternz Summer Internship</h3>
+                    <p class="organization">Educational Organisation on ServiceNow</p>
+                    <p class="description">Created a basic ServiceNow application, streamlining core administrative processes within the platform.</p>
                 </div>
-<!--                  Project: College Admission Management System  -->
-                <div class="mb-10 ml-8 timeline-item">
-                    <h3 class="text-lg font-semibold" data-color-index="4">Project: College Admission Management System (Solo Project)</h3>
-                    <time class="block mb-2 text-sm font-normal leading-none" style="color: var(--text-secondary);">Duration: June 2025</time>
-                    <p class="text-base font-normal" style="color: var(--text-secondary);">Developing a React-based College Admission Management App featuring student login for registering and admin login for admission management.</p>
+                <div class="experience-card">
+                    <h3>Intern</h3>
+                    <p class="organization">Microsoft and TechShikSha</p>
+                    <p class="location">Bangalore, Karnataka, India</p>
+                    <p class="description">Collaborated with industry experts, gaining hands-on Azure AI experience.</p>
                 </div>
-<!--                  Internship: Microsoft  -->
-                <div class="mb-10 ml-8 timeline-item">
-                    <h3 class="text-lg font-semibold" data-color-index="2">Internship: Microsoft - TechShikSha Internship</h3>
-                    <time class="block mb-2 text-sm font-normal leading-none" style="color: var(--text-secondary);">September 2024 – October 2024</time>
-                    <p class="text-base font-normal" style="color: var(--text-secondary);">Gained practical experience with Azure AI services (Document Intelligence, Language Processing) and insights from visits to Microsoft Office (Bangalore) and CMTI (Bangalore).</p>
-                </div>
-<!--                  Internship: SkillDzire  -->
-                <div class="ml-8 timeline-item">
-                    <h3 class="text-lg font-semibold" data-color-index="3">Internship: SkillDzire Internship (APSCHE Approved)</h3>
-                    <time class="block mb-2 text-sm font-normal leading-none" style="color: var(--text-secondary);">2 Months</time>
-                    <p class="text-base font-normal" style="color: var(--text-secondary);">Completed training focused on Machine Learning fundamentals.</p>
+                <div class="experience-card">
+                    <h3>Virtual Intern</h3>
+                    <p class="organization">SkillDzire</p>
+                    <p class="location">Hyderabad, Telangana, India</p>
+                    <p class="description">Developed a Python-based ML Sentiment Analyzer prototype, streamlining product review analysis for quicker customer insights.</p>
                 </div>
             </div>
         </section>
 
-<!--          Skills Section  -->
-        <section id="skills" class="mb-24 pt-16 -mt-16"> <!-- Added pt and negative mt for scroll offset -->
-            <h2 class="text-3xl font-bold tracking-tight text-center" data-color-index="3">Technical Skills</h2>
-            <p class="mt-3 max-w-2xl mx-auto text-center text-xl" style="color: var(--text-secondary);">
-<!--                 A visualization of my technical abilities across different domains. Hover over this section to view the chart. -->
-            </p>
-            <div class="mt-12 chart-container">
-                <canvas id="skillsChart"></canvas>
-            </div>
-        </section>
-
-<!--          Workshops & Achievements Section  -->
-        <section id="workshops-achievements" class="mb-24 pt-16 -mt-16">
-            <h2 class="text-3xl font-bold tracking-tight text-center" data-color-index="0">Workshops & Achievements</h2>
-            <p class="mt-3 max-w-2xl mx-auto text-center text-xl" style="color: var(--text-secondary);">
-<!--                Highlights of my participation in workshops and notable achievements. -->
-            </p>
-            <div class="mt-12 space-y-4">
-                <div class="flex items-start p-4 bg-[var(--bg-secondary)] rounded-lg shadow-md border-l-4 border-[var(--distinct-color-1)]">
-                   <div class="flex-shrink-0">
-                        <span class="text-3xl icon-color-1">🏆</span>
-                    </div>
-                    <p class="ml-3 text-base font-semibold" style="color: var(--text-primary);">Finalist, Shastra 1.0 Coding Hackathon.</p>
+        <section id="certifications" class="container">
+            <h2>Certifications & Achievements</h2>
+            <div class="certifications-container">
+                <div class="certification-card">
+                    <h3>Certified System Administrator (CSA)</h3>
+                    <p class="organization">ServiceNow</p>
+                    <p class="description">Validated expertise in ServiceNow platform administration, streamlining IT operations.</p>
                 </div>
-                <div class="flex items-start p-4 bg-[var(--bg-secondary)] rounded-lg shadow-md border-l-4 border-[var(--distinct-color-2)]">
-                    <div class="flex-shrink-0">
-                        <span class="text-3xl icon-color-2">💻</span>
-                    </div>
-                    <p class="ml-3 text-base font-semibold" style="color: var(--text-primary);">Participated in C and Data Structures workshops by Coign Consultants Pvt Ltd.</p>
+                <div class="certification-card">
+                    <h3>Certified Application Developer (CAD)</h3>
+                    <p class="organization">ServiceNow</p>
+                    <p class="description">Developed and customized ServiceNow applications, accelerating digital workflow automation.</p>
                 </div>
-                <div class="flex items-start p-4 bg-[var(--bg-secondary)] rounded-lg shadow-md border-l-4 border-[var(--distinct-color-3)]">
-                    <div class="flex-shrink-0">
-                        <span class="text-3xl icon-color-3">📚</span>
-                    </div>
-                    <p class="ml-3 text-base font-semibold" style="color: var(--text-primary);">Attended "Integrative AI in Web & App Development" workshop by Mentorly.</p>
+                <div class="certification-card">
+                    <h3>Azure AI Document Intelligence</h3>
+                    <p class="organization">Microsoft</p>
+                    <p class="description">Developed intelligent document processing solutions on Azure AI to automate data extraction.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Azure AI Language</h3>
+                    <p class="organization">Microsoft</p>
+                    <p class="description">Built natural language processing (NLP) solutions on Azure AI to automate text-based insight extraction.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Introduction to Generative AI</h3>
+                    <p class="organization">Google Cloud</p>
+                    <p class="description">Gained foundational knowledge for innovative AI solutions including prompt engineering in Vertex AI.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Shastra 1.0 Coding Hackathon</h3>
+                    <p class="organization">Finalist.</p>
                 </div>
             </div>
         </section>
 
-<!--          Certifications Section  -->
-        <section id="credentials" class="mb-24 pt-16 -mt-16"> <!-- Added pt and negative mt for scroll offset -->
-            <h2 class="text-3xl font-bold tracking-tight text-center" data-color-index="1">Certifications</h2>
-             <p class="mt-3 max-w-2xl mx-auto text-center text-xl" style="color: var(--text-secondary);">
-<!--                My professional certifications. Click on a card to flip it and read the description. -->
-            </p>
-            <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-<!--                  ServiceNow CSA  -->
-                <div class="flip-card" data-color-index="0">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h4 class="font-bold text-lg" style="color: var(--text-primary);">ServiceNow Certified System Administrator (CSA)</h4>
-                        </div>
-                        <div class="flip-card-back">
-                            <p class="text-sm"></p>
-                        </div>
+        <section id="skills" class="container">
+            <h2>Technical Skills</h2>
+            <div class="skills-container">
+                <div class="skills-category">
+                    <h3>Languages</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
                     </div>
                 </div>
-<!--                  Azure AI Document Intelligence  -->
-                <div class="flip-card" data-color-index="1">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h4 class="font-bold text-lg" style="color: var(--text-primary);">Azure AI Document Intelligence – Microsoft</h4>
-                        </div>
-                        <div class="flip-card-back">
-                            <p class="text-sm"></p>
-                        </div>
+                <div class="skills-category">
+                    <h3>Databases</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">MongoDB</span>
                     </div>
                 </div>
-<!--                  Azure AI Language (NLP)  -->
-                <div class="flip-card" data-color-index="2">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <h4 class="font-bold text-lg" style="color: var(--text-primary);">Azure AI Language (NLP) – Microsoft</h4>
-                        </div>
-                        <div class="flip-card-back">
-                            <p class="text-sm"></p>
-                        </div>
+                <div class="skills-category">
+                    <h3>Tools & Platforms</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">Microsoft Azure</span>
+                        <span class="skill-tag">ServiceNow</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Google Workspace</span>
                     </div>
                 </div>
-<!--                  Introduction to GitHub Administration  -->
-                <div class="flip-card" data-color-index="3">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                             <h4 class="font-bold text-lg" style="color: var(--text-primary);">Introduction to GitHub Administration – Microsoft</h4>
-                        </div>
-                        <div class="flip-card-back">
-                            <p class="text-sm"></p>
-                        </div>
-                    </div>
-                </div>
+            </div>
+        </section>
+
+        <section id="education" class="container">
+            <h2>Education</h2>
+            <div class="education-content">
+                <h3>Computer Science and Engineering</h3>
+                <p>2022 - 2026</p>
             </div>
         </section>
     </main>
 
-    <footer class="bg-[var(--bg-secondary)] transition-colors duration-300">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center" style="color: var(--text-secondary);">
-            <p>&copy; 2025 Akash Veerla. All Rights Reserved.</p>
-        </div>
+    <footer>
+        <p>&copy; 2024 AKASH. All rights reserved.</p>
     </footer>
 
-    <script>
-        let skillsChartInstance = null;
-        let chartInitialized = false; // Flag to track if chart has been initialized
-
-        // Define the new modern minimal color palette
-        const websitePalette = {
-            bgColor: '#FFFFFF', // Pure white background
-            bgSecondary: '#FFFFFF', // Pure white for nav/card backgrounds
-            primaryText: '#374151', // Dark gray for main text
-            secondaryText: '#6B7280', // Medium gray for secondary text
-            accentMain: '#10B981', // Vibrant Teal accent
-            borderLight: '#E5E7EB', // Lighter gray border
-
-            // Distinct Colors for Headings/Cards (modern, playful, professional)
-            distinctColors: [
-                '#10B981', // Teal
-                '#6366F1', // Indigo
-                '#F97316', // Orange
-                '#EC4899', // Pink
-                '#3B82F6'  // Blue
-            ]
-        };
-
-        // Chart-specific colors (now integrated into the new theme)
-        const chartPalette = {
-            gradientPink: 'rgba(255, 192, 203, 0.3)', // Light pink, 30% opacity
-            gradientWhite: 'rgba(255, 255, 255, 0.3)', // White, 30% opacity
-            // Colors for distinct chart lines (aligned with new theme's distinct colors)
-            lineColors: [
-                '#10B981', // Teal
-                '#6366F1', // Indigo
-                '#F97316', // Orange
-                '#EC4899', // Pink
-                '#3B82F6'  // Blue
-            ],
-            gridColor: '#000000' // Black grid lines
-        };
-
-        // Certification descriptions (moved to JS for easier management and dynamic assignment)
-        const certificationDescriptions = {
-            "ServiceNow Certified System Administrator (CSA)": "Demonstrates foundational knowledge and skills to administer a ServiceNow instance, including managing users, data, and applications.",
-            "Azure AI Document Intelligence – Microsoft": "Proficiency in building and deploying intelligent document processing solutions using Azure's AI capabilities to extract structured data from various document types.",
-            "Azure AI Language (NLP) – Microsoft": "Knowledge of natural language processing techniques and practical experience with Azure AI Language services for tasks like sentiment analysis, key phrase extraction, and entity recognition.",
-            "Introduction to GitHub Administration – Microsoft": "Understanding of GitHub's administrative features, including repository management, team collaboration, and security best practices within a GitHub Enterprise environment."
-        };
-
-
-        function getWebsiteColor(type, index = 0) {
-            if (type === 'distinctColors') {
-                return websitePalette.distinctColors[index % websitePalette.distinctColors.length];
-            }
-            return websitePalette[type];
-        }
-
-        function applyColorsToElements() {
-            const root = document.documentElement;
-
-            // Apply website palette to CSS variables
-            root.style.setProperty('--bg-primary', websitePalette.bgColor);
-            root.style.setProperty('--bg-secondary', websitePalette.bgSecondary);
-            root.style.setProperty('--text-primary', websitePalette.primaryText);
-            root.style.setProperty('--text-secondary', websitePalette.secondaryText);
-            root.style.setProperty('--accent-main', websitePalette.accentMain);
-            root.style.setProperty('--border-light', websitePalette.borderLight);
-
-            // Apply distinct colors to headings
-            document.querySelectorAll('h1, h2, h3').forEach(heading => {
-                const colorIndex = parseInt(heading.dataset.colorIndex || '0');
-                heading.style.color = getWebsiteColor('distinctColors', colorIndex);
-            });
-
-            // Apply distinct colors to timeline item headings
-            document.querySelectorAll('.timeline-item h3').forEach((heading, index) => {
-                heading.style.color = getWebsiteColor('distinctColors', index);
-            });
-
-            // Update chart colors if initialized (using chartPalette)
-            if (skillsChartInstance) {
-                const chartContainer = document.querySelector('.chart-container');
-                const isChartActive = chartContainer.classList.contains('active');
-                const ctx = document.getElementById('skillsChart').getContext('2d');
-
-                // Chart border colors are now distinct colors
-                const chartBorderColors = skillsData.labels.map((_, i) => chartPalette.lineColors[i % chartPalette.lineColors.length]);
-
-                let gradientFill = 'transparent';
-                if (isChartActive) {
-                    gradientFill = ctx.createLinearGradient(0, 0, 0, skillsChartInstance.canvas.height);
-                    gradientFill.addColorStop(0, chartPalette.gradientPink);
-                    gradientFill.addColorStop(1, chartPalette.gradientWhite);
-                }
-
-                skillsChartInstance.data.datasets[0].backgroundColor = gradientFill;
-                skillsChartInstance.data.datasets[0].borderColor = isChartActive ? chartBorderColors : 'transparent';
-                skillsChartInstance.data.datasets[0].pointBackgroundColor = isChartActive ? chartBorderColors : 'transparent'; // Point background color is distinct
-                skillsChartInstance.data.datasets[0].pointBorderColor = isChartActive ? websitePalette.bgPrimary : 'transparent'; // Point border color matches body background
-                skillsChartInstance.data.datasets[0].pointHoverBackgroundColor = isChartActive ? websitePalette.bgPrimary : 'transparent'; // Hover background color matches body background
-                skillsChartInstance.data.datasets[0].pointHoverBorderColor = isChartActive ? chartBorderColors : 'transparent'; // Hover border color is distinct
-
-                skillsChartInstance.options.scales.r.angleLines.color = chartPalette.gridColor; // Black grid lines
-                skillsChartInstance.options.scales.r.grid.color = chartPalette.gridColor; // Black grid lines
-                
-                skillsChartInstance.update();
-            }
-
-            // Update flip card back colors and front border colors
-            document.querySelectorAll('.flip-card').forEach(card => {
-                const colorIndex = parseInt(card.dataset.colorIndex || '0'); // Use data-color-index
-                const frontElement = card.querySelector('.flip-card-front');
-                const backElement = card.querySelector('.flip-card-back');
-                
-                const borderColor = getWebsiteColor('distinctColors', colorIndex); // Use new distinct colors
-                frontElement.style.borderColor = borderColor;
-                backElement.style.backgroundColor = borderColor;
-                
-                // Ensure text color on the back is white and set description
-                const backTextElement = backElement.querySelector('p');
-                const frontTitleElement = frontElement.querySelector('h4');
-                if (backTextElement && frontTitleElement) {
-                    backTextElement.style.color = 'white';
-                    const title = frontTitleElement.textContent.trim();
-                    backTextElement.textContent = certificationDescriptions[title] || "No description available.";
-                }
-            });
-
-            // Update workshop/achievement icons colors using CSS variables for clarity
-            const workshopCard1Icon = document.querySelector('.icon-color-1');
-            if (workshopCard1Icon) {
-                workshopCard1Icon.style.color = 'var(--distinct-color-1)'; // Teal
-            }
-            const workshopCard2Icon = document.querySelector('.icon-color-2');
-            if (workshopCard2Icon) {
-                workshopCard2Icon.style.color = 'var(--distinct-color-2)'; // Indigo
-            }
-            const workshopCard3Icon = document.querySelector('.icon-color-3');
-            if (workshopCard3Icon) {
-                workshopCard3Icon.style.color = 'var(--distinct-color-3)'; // Orange
-            }
-
-            // Ensure text colors are correctly applied using CSS variables
-            // These elements are now explicitly styled in HTML with `style="color: var(--...)"`
-            // or handled by general CSS rules for p, li, time, h4.
-            // The direct JS manipulation here is primarily for elements that might have conflicting inline styles or specific needs.
-
-            // Nav title
-            const navTitle = document.querySelector('nav span.text-xl.font-bold');
-            if (navTitle) {
-                navTitle.style.color = 'var(--text-primary)';
-            }
-
-            // Nav links and mobile menu button
-            document.querySelectorAll('.nav-link').forEach(el => {
-                el.style.color = 'var(--text-secondary)';
-                el.onmouseover = () => el.style.color = 'var(--accent-main)';
-                el.onmouseout = () => el.style.color = 'var(--text-secondary)';
-            });
-            
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            if (mobileMenuButton) {
-                mobileMenuButton.style.color = 'var(--text-secondary)';
-                mobileMenuButton.onmouseover = () => mobileMenuButton.style.color = 'var(--text-primary)';
-                mobileMenuButton.onmouseout = () => mobileMenuButton.style.color = 'var(--text-secondary)';
-                // Ensure focus ring color
-                mobileMenuButton.style.setProperty('--tw-ring-color', 'var(--accent-main)');
-            }
-
-            // Social logos are now colored by default, no grayscale filter needed
-            document.querySelectorAll('.social-logo').forEach(logo => {
-                logo.style.filter = 'none'; // Remove grayscale filter
-            });
-        }
-
-        const skillsData = {
-            labels: ['Languages', 'Frameworks & Tools', 'Databases', 'Platforms', 'Cloud Services'],
-            datasets: [{
-                label: 'Technical Proficiency',
-                data: [4, 4, 3, 5, 4],
-                backgroundColor: 'transparent',
-                borderColor: 'transparent',
-                pointBackgroundColor: 'transparent',
-                pointBorderColor: 'transparent',
-                pointHoverBackgroundColor: 'transparent',
-                pointHoverBorderColor: 'transparent',
-                borderWidth: 2,
-                pointRadius: 6,
-                pointHoverRadius: 8,
-                pointHitRadius: 10
-            }]
-        };
-
-        const skillsConfig = {
-            type: 'radar',
-            data: skillsData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: {
-                    duration: 1000,
-                    easing: 'easeInOutQuad'
-                },
-                scales: {
-                    r: {
-                        angleLines: {
-                            color: chartPalette.gridColor /* Black grid lines */
-                        },
-                        grid: {
-                            color: chartPalette.gridColor /* Black grid lines */
-                        },
-                        pointLabels: {
-                            font: {
-                                size: 14,
-                                weight: 'bold' // Make skill labels bolder
-                            },
-                            color: websitePalette.secondaryText /* Default point label color from website palette */
-                        },
-                        ticks: {
-                            display: false,
-                            stepSize: 1
-                        },
-                        suggestedMin: 0,
-                        suggestedMax: 5
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                         callbacks: {
-                            label: function(context) {
-                                const skillCategory = context.label;
-                                let skills = '';
-                                switch(skillCategory) {
-                                    case 'Languages': skills = 'C, Python, Java'; break;
-                                    case 'Frameworks & Tools': skills = 'React, Git, GitHub'; break;
-                                    case 'Databases': skills = 'MongoDB'; break;
-                                    case 'Platforms': skills = 'Linux (Debian based Distribution), Google Workspace (Docs, Slides, Sheets)'; break;
-                                    case 'Cloud Services': skills = 'Microsoft Azure (Document Intelligence, Natural Language Processing)'; break;
-                                }
-                                return skills;
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
-        function initSkillsChart() {
-            if (!chartInitialized) {
-                const ctx = document.getElementById('skillsChart').getContext('2d');
-                skillsChartInstance = new Chart(ctx, skillsConfig);
-                chartInitialized = true;
-            }
-        }
-
-        window.onload = function() {
-            applyColorsToElements(); // Apply colors on initial load
-
-            const skillsSection = document.getElementById('skills');
-            const chartContainer = document.querySelector('.chart-container');
-
-            skillsSection.addEventListener('mouseenter', () => {
-                initSkillsChart(); // Initialize chart if not already
-                chartContainer.classList.add('active'); // Add active class to container
-                applyColorsToElements(); // Apply colors to chart when hovered
-            });
-
-            skillsSection.addEventListener('mouseleave', () => {
-                chartContainer.classList.remove('active'); // Remove active class from container
-                applyColorsToElements(); // Make chart transparent when mouse leaves
-            });
-            
-            // Smooth scroll with offset for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    const navbarHeight = document.getElementById('navbar').offsetHeight;
-                    const offsetPosition = targetElement.offsetTop - navbarHeight;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-
-                    // Close mobile menu if open
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                         mobileMenu.classList.add('hidden');
-                    }
-                });
-            });
-
-            // Flip card functionality
-            document.querySelectorAll('.flip-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    card.classList.toggle('flipped');
-                });
-            });
-
-            // Timeline hover indicator logic
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            const timelineIndicator = document.getElementById('timeline-hover-indicator');
-            const timelineContainer = document.querySelector('#experience .relative');
-
-            if (timelineIndicator && timelineContainer) {
-                timelineItems.forEach(item => {
-                    item.addEventListener('mouseenter', () => {
-                        const offsetTop = item.offsetTop;
-                        // Calculate position relative to the timeline container's top
-                        const containerTop = timelineContainer.getBoundingClientRect().top + window.scrollY;
-                        const itemTopRelativeToContainer = offsetTop - (containerTop - timelineContainer.offsetTop);
-
-                        timelineIndicator.style.top = (itemTopRelativeToContainer + item.offsetHeight / 2 - timelineIndicator.offsetHeight / 2) + 'px'; // Center the circle
-                        timelineIndicator.style.opacity = '1';
-                    });
-
-                    item.addEventListener('mouseleave', () => {
-                        timelineIndicator.style.opacity = '0';
-                    });
-                });
-            }
-        };
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
