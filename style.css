@@ -1,233 +1,74 @@
-/* Standard Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
-/* Base Theme Variables */
-:root {
-    /* Light Theme */
-    --background-light: #FFFFFF;
-    --text-light: #000000;
-    --primary-light: #FF0000; /* Red */
-
-    /* Dark Theme */
-    --background-dark: #000000;
-    --text-dark: #FFFFFF;
-    --primary-dark: #FF1493; /* Neon Red/Pink */
-
-    --font-main: 'Poppins', sans-serif;
-}
-
-/* Base Styles */
 body {
-    font-family: var(--font-main);
-    background-color: var(--background-light);
-    color: var(--text-light);
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Poppins', sans-serif;
 }
 
-body.dark-theme {
-    background-color: var(--background-dark);
-    color: var(--text-dark);
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.container {
-    max-width: 1200px;
-    width: 100%;
-    margin: 2rem 0;
-    padding: 2rem;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
-    color: var(--primary-light);
-}
-
-body.dark-theme h1, body.dark-theme h2, body.dark-theme h3, body.dark-theme h4, body.dark-theme h5, body.dark-theme h6 {
-    color: var(--primary-dark);
-}
-
-h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-a {
-    color: var(--primary-light);
-    text-decoration: none;
-}
-
-body.dark-theme a {
-    color: var(--primary-dark);
-}
-
-/* Navbar Styles */
-.navbar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid #eee;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-body.dark-theme .navbar {
-    background: rgba(0, 0, 0, 0.8);
-    border-bottom: 1px solid #333;
-}
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+body.dark-theme .glass-effect {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 2.5rem;
 }
 
-.nav-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.nav-menu a {
+    font-size: 1.25rem;
 }
 
-.nav-item {
-    margin-left: 2rem;
+#hero h1 {
+    font-size: 5rem;
 }
 
-.theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-light);
+#hero p {
+    font-size: 2rem;
 }
 
-body.dark-theme .theme-toggle {
-    color: var(--text-dark);
+.hero-buttons a {
+    font-size: 1.25rem;
+    padding: 1rem 2.5rem;
 }
 
-/* Experience Section */
-.experience-container {
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    padding-bottom: 1.5rem;
-}
-
-.experience-card {
-    flex: 0 0 320px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+h2 {
+    font-size: 3.5rem;
 }
 
 .experience-card h3 {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
-.experience-card .organization {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.experience-card .location {
-    font-style: italic;
-    margin-bottom: 1rem;
-}
-
-/* Certifications Section */
-.certifications-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.certification-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+.experience-card p {
+    font-size: 1.125rem;
 }
 
 .certification-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
-.certification-card .organization {
-    font-weight: 500;
-    color: var(--primary-light);
-    margin-bottom: 1rem;
-}
-
-body.dark-theme .certification-card .organization {
-    color: var(--primary-dark);
-}
-
-/* Skills Section */
-.skills-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 3rem;
-}
-
-.skills-category {
-    text-align: center;
+.certification-card p {
+    font-size: 1rem;
 }
 
 .skills-category h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.skills-tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
+    font-size: 1.75rem;
 }
 
 .skill-tag {
-    background-color: var(--primary-light);
-    color: var(--background-light);
-    padding: 0.5rem 1rem;
-    border-radius: 1rem;
-}
-
-body.dark-theme .skill-tag {
-    background-color: var(--primary-dark);
-    color: var(--background-dark);
-}
-
-/* Education Section */
-.education-content {
-    text-align: center;
+    font-size: 1rem;
 }
 
 .education-content h3 {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 .education-content p {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
