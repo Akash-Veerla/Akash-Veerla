@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
     <header id="hero">
-        <nav class="navbar glass-effect">
+        <nav class="navbar">
             <div class="container">
                 <a href="#" class="nav-logo">AKASH</a>
                 <ul class="nav-menu">
@@ -30,14 +30,14 @@
                 </button>
             </div>
         </nav>
-        <div class="hero-content">
+        <div class="hero-content container">
             <h1>AKASH</h1>
             <p>Computer Science Engineering Student</p>
             <div class="hero-buttons">
-                <a href="https://linkedin.com/in/veerla-akash" target="_blank" class="glass-button">
+                <a href="https://linkedin.com/in/veerla-akash" target="_blank" class="button">
                     <i class="fab fa-linkedin"></i> LinkedIn
                 </a>
-                <a href="mailto:akashveerla0@gmail.com" class="glass-button">
+                <a href="mailto:akashveerla0@gmail.com" class="button">
                     <i class="fas fa-envelope"></i> Email
                 </a>
             </div>
@@ -45,24 +45,106 @@
     </header>
 
     <main>
-        <section id="experience" class="container glass-effect">
+        <section id="experience" class="container">
             <h2>Experience & Internships</h2>
-            <!-- Experience content will be here -->
+            <div class="experience-container">
+                <div class="experience-card">
+                    <h3>Team Member</h3>
+                    <p class="organization">IIT Bombay TIH-IoT Foundation</p>
+                    <p class="location">Mumbai, Maharashtra, India</p>
+                    <p class="description">Developed a Bluetooth smart charger prototype and mobile app for automatic control, theoretically reducing overcharge risk by ~85% and extending battery lifespan by 12-24%. With a team of four members.</p>
+                </div>
+                <div class="experience-card">
+                    <h3>SmartInternz Summer Internship</h3>
+                    <p class="organization">Educational Organisation on ServiceNow</p>
+                    <p class="description">Created a basic ServiceNow application, streamlining core administrative processes within the platform.</p>
+                </div>
+                <div class="experience-card">
+                    <h3>Intern</h3>
+                    <p class="organization">Microsoft and TechShikSha</p>
+                    <p class="location">Bangalore, Karnataka, India</p>
+                    <p class="description">Collaborated with industry experts, gaining hands-on Azure AI experience.</p>
+                </div>
+                <div class="experience-card">
+                    <h3>Virtual Intern</h3>
+                    <p class="organization">SkillDzire</p>
+                    <p class="location">Hyderabad, Telangana, India</p>
+                    <p class="description">Developed a Python-based ML Sentiment Analyzer prototype, streamlining product review analysis for quicker customer insights.</p>
+                </div>
+            </div>
         </section>
 
-        <section id="certifications" class="container glass-effect">
+        <section id="certifications" class="container">
             <h2>Certifications & Achievements</h2>
-            <!-- Certifications content will be here -->
+            <div class="certifications-container">
+                <div class="certification-card">
+                    <h3>Certified System Administrator (CSA)</h3>
+                    <p class="organization">ServiceNow</p>
+                    <p class="description">Validated expertise in ServiceNow platform administration, streamlining IT operations.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Certified Application Developer (CAD)</h3>
+                    <p class="organization">ServiceNow</p>
+                    <p class="description">Developed and customized ServiceNow applications, accelerating digital workflow automation.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Azure AI Document Intelligence</h3>
+                    <p class="organization">Microsoft</p>
+                    <p class="description">Developed intelligent document processing solutions on Azure AI to automate data extraction.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Azure AI Language</h3>
+                    <p class="organization">Microsoft</p>
+                    <p class="description">Built natural language processing (NLP) solutions on Azure AI to automate text-based insight extraction.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Introduction to Generative AI</h3>
+                    <p class="organization">Google Cloud</p>
+                    <p class="description">Gained foundational knowledge for innovative AI solutions including prompt engineering in Vertex AI.</p>
+                </div>
+                <div class="certification-card">
+                    <h3>Shastra 1.0 Coding Hackathon</h3>
+                    <p class="organization">Finalist.</p>
+                </div>
+            </div>
         </section>
 
-        <section id="skills" class="container glass-effect">
+        <section id="skills" class="container">
             <h2>Technical Skills</h2>
-            <!-- Skills content will be here -->
+            <div class="skills-container">
+                <div class="skills-category">
+                    <h3>Languages</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Databases</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Tools & Platforms</h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">Microsoft Azure</span>
+                        <span class="skill-tag">ServiceNow</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">Google Workspace</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="education" class="container glass-effect">
+        <section id="education" class="container">
             <h2>Education</h2>
-            <!-- Education content will be here -->
+            <div class="education-content">
+                <h3>Computer Science and Engineering</h3>
+                <p>2022 - 2026</p>
+            </div>
         </section>
     </main>
 
