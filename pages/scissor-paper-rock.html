@@ -3,24 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
+    <title>Scissor Paper Rock</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        .rps-container { text-align: center; }
-        .choices { display: flex; justify-content: center; gap: 2rem; margin: 2rem 0; }
-        .choice { font-size: 3rem; cursor: pointer; transition: transform 0.2s; }
-        .choice:hover { transform: scale(1.2); }
-        .result { font-size: 2rem; font-weight: bold; margin-top: 2rem; }
-        .score { font-size: 1.5rem; margin-top: 1rem; }
+        .spr-container { text-align: center; }
+        .choices { display: flex; justify-content: center; gap: 4rem; margin: 3rem 0; }
+        .choice {
+            font-size: 6rem;
+            cursor: pointer;
+            transition: transform 0.2s, text-shadow 0.2s;
+            padding: 2rem;
+            border-radius: 50%;
+        }
+        .choice:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 20px var(--primary-light);
+        }
+        body.dark-theme .choice:hover {
+            text-shadow: 0 0 20px var(--primary-dark);
+        }
+        .result { font-size: 2.5rem; font-weight: bold; margin-top: 3rem; }
+        .score { font-size: 2rem; margin-top: 1.5rem; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar glass-effect">
         <div class="container">
             <a href="../index.html" class="nav-logo">AKASH</a>
             <ul class="nav-menu">
@@ -38,12 +50,12 @@
         </div>
     </nav>
 
-    <main class="container rps-container">
-        <h2>Rock, Paper, Scissors</h2>
-        <div class="choices">
-            <i class="fas fa-hand-rock choice" data-choice="rock"></i>
-            <i class="fas fa-hand-paper choice" data-choice="paper"></i>
+    <main class="container spr-container">
+        <h2>Scissor, Paper, Rock</h2>
+        <div class="choices glass-effect">
             <i class="fas fa-hand-scissors choice" data-choice="scissors"></i>
+            <i class="fas fa-hand-paper choice" data-choice="paper"></i>
+            <i class="fas fa-hand-rock choice" data-choice="rock"></i>
         </div>
         <div class="result" id="result">Make your choice!</div>
         <div class="score">
@@ -88,9 +100,9 @@
                     return 'draw';
                 }
                 if (
-                    (player === 'rock' && computer === 'scissors') ||
+                    (player === 'scissors' && computer === 'paper') ||
                     (player === 'paper' && computer === 'rock') ||
-                    (player === 'scissors' && computer === 'paper')
+                    (player === 'rock' && computer === 'scissors')
                 ) {
                     return 'player';
                 }
@@ -101,10 +113,13 @@
                 let message = `You chose ${player}, computer chose ${computer}. `;
                 if (winner === 'player') {
                     message += 'You win!';
+                    resultDiv.style.color = 'var(--md-sys-color-tertiary-light)';
                 } else if (winner === 'computer') {
                     message += 'You lose!';
+                    resultDiv.style.color = 'var(--md-sys-color-primary-light)';
                 } else {
                     message += "It's a draw!";
+                    resultDiv.style.color = 'var(--md-sys-color-secondary-light)';
                 }
                 resultDiv.textContent = message;
             }
