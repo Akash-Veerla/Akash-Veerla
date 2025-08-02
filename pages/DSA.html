@@ -4,51 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DSA Preparation App</title>
-    <!-- Tailwind CSS CDN for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Setting the default font and background color */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
-        }
-        /* Custom styles for the collapsible sections */
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-            padding: 0 1.5rem; /* Add horizontal padding, but no vertical padding initially */
-        }
-        .collapsible-content.expanded {
-            max-height: 1000px; /* A large value to ensure content fits */
-            padding: 1.5rem; /* Add vertical padding when expanded */
-        }
-        .collapsible-header svg {
-            transition: transform 0.3s ease;
-        }
-        .collapsible-header.expanded svg {
-            transform: rotate(180deg);
-        }
-    </style>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
+<body>
 
-    <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8">
-        <h1 class="text-3xl sm:text-4xl font-bold text-center mb-6 text-gray-900 dark:text-white">
-            Interview Prep: DSA Concepts
-        </h1>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="nav-logo">AKASH</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index.html#experience" class="nav-link">Experience</a></li>
+                <li class="nav-item"><a href="../index.html#certifications" class="nav-link">Certifications</a></li>
+                <li class="nav-item"><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="../index.html#education" class="nav-link">Education</a></li>
+                <li class="nav-item"><a href="interview_prep.html" class="nav-link">Interview Prep</a></li>
+                <li class="nav-item"><a href="DSA.html" class="nav-link">DSA</a></li>
+                <li class="nav-item"><a href="games.html" class="nav-link">Games</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
 
-        <p class="text-center text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Click on a category to explore key algorithms and interview questions.
-        </p>
-
+    <main class="container">
+        <h2 class="text-center">DSA Concepts</h2>
         <div id="dsa-container" class="space-y-4">
             <!-- DSA concepts will be dynamically added here by JavaScript -->
         </div>
-    </div>
+    </main>
 
+    <footer>
+        <p>&copy; 2024 AKASH. All rights reserved.</p>
+    </footer>
+
+    <script src="../script.js"></script>
     <script>
-        // Data structure containing all the DSA concepts
         const dsaConcepts = [
             {
                 title: 'Linear DSA: Arrays',
@@ -173,10 +167,8 @@
             },
         ];
 
-        // Function to create a list item for an algorithm or question
         const createListItem = (text, isAlgorithm = false) => {
             const li = document.createElement('li');
-            li.className = 'text-gray-700 dark:text-gray-200';
             if (isAlgorithm) {
                 const nameSpan = document.createElement('span');
                 nameSpan.className = 'font-semibold';
@@ -189,79 +181,54 @@
             return li;
         };
 
-        // Function to render all the DSA sections
         const renderDSASections = () => {
             const container = document.getElementById('dsa-container');
-            container.innerHTML = ''; // Clear existing content
+            container.innerHTML = '';
             dsaConcepts.forEach((category) => {
                 const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'bg-gray-50 dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl';
+                categoryDiv.className = 'card glass-effect';
 
                 const button = document.createElement('button');
-                button.className = 'collapsible-header w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none';
+                button.className = 'accordion-header';
                 button.innerHTML = `
-                    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
-                        ${category.title}
-                    </h2>
-                    <svg class="w-6 h-6 text-gray-500 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
+                    <h3>${category.title}</h3>
+                    <i class="fas fa-chevron-down"></i>
                 `;
 
                 const contentDiv = document.createElement('div');
-                contentDiv.className = 'collapsible-content bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700';
+                contentDiv.className = 'accordion-content';
 
-                // Summary
                 const summaryP = document.createElement('p');
-                summaryP.className = 'text-base text-gray-600 dark:text-gray-300 mb-4';
                 summaryP.textContent = category.summary;
                 contentDiv.appendChild(summaryP);
 
-                // Algorithms section
                 if (category.algorithms && category.algorithms.length > 0) {
                     const algorithmsDiv = document.createElement('div');
-                    algorithmsDiv.className = 'mb-4';
-                    const h3Algo = document.createElement('h3');
-                    h3Algo.className = 'text-lg font-bold mb-2';
-                    h3Algo.textContent = 'Key Algorithms:';
+                    algorithmsDiv.innerHTML = '<h4>Key Algorithms:</h4>';
                     const ulAlgo = document.createElement('ul');
-                    ulAlgo.className = 'list-disc list-inside space-y-1 pl-4';
                     category.algorithms.forEach(algo => ulAlgo.appendChild(createListItem(algo, true)));
-                    algorithmsDiv.appendChild(h3Algo);
                     algorithmsDiv.appendChild(ulAlgo);
                     contentDiv.appendChild(algorithmsDiv);
                 }
 
-                // Questions section
                 if (category.questions && category.questions.length > 0) {
                     const questionsDiv = document.createElement('div');
-                    const h3Ques = document.createElement('h3');
-                    h3Ques.className = 'text-lg font-bold mb-2';
-                    h3Ques.textContent = 'Example Interview Questions:';
+                    questionsDiv.innerHTML = '<h4>Example Interview Questions:</h4>';
                     const ulQues = document.createElement('ul');
-                    ulQues.className = 'list-decimal list-inside space-y-1 pl-4';
                     category.questions.forEach(question => ulQues.appendChild(createListItem(question)));
-                    questionsDiv.appendChild(h3Ques);
                     questionsDiv.appendChild(ulQues);
                     contentDiv.appendChild(questionsDiv);
                 }
 
-                // Example section (if available)
                 if (category.example) {
                     const exampleDiv = document.createElement('div');
-                    exampleDiv.className = 'mt-4 pt-4 border-t border-gray-200 dark:border-gray-700';
-                    const h3Example = document.createElement('h3');
-                    h3Example.className = 'text-lg font-bold mb-2';
-                    h3Example.textContent = `Example: ${category.example.title}`;
+                    exampleDiv.innerHTML = `<h4>Example: ${category.example.title}</h4>`;
                     const pExample = document.createElement('p');
-                    pExample.className = 'text-base text-gray-600 dark:text-gray-300 mb-2';
                     pExample.textContent = category.example.description;
                     const pre = document.createElement('pre');
-                    pre.className = 'bg-gray-100 dark:bg-gray-900 rounded-lg p-4 text-sm overflow-x-auto';
                     const code = document.createElement('code');
                     code.textContent = category.example.code;
                     pre.appendChild(code);
-                    exampleDiv.appendChild(h3Example);
                     exampleDiv.appendChild(pExample);
                     exampleDiv.appendChild(pre);
                     contentDiv.appendChild(exampleDiv);
@@ -271,25 +238,21 @@
                 categoryDiv.appendChild(contentDiv);
                 container.appendChild(categoryDiv);
 
-                // Add click event listener to the button
                 button.addEventListener('click', () => {
                     const isExpanded = button.classList.contains('expanded');
-                    document.querySelectorAll('.collapsible-header').forEach(header => {
+                    document.querySelectorAll('.accordion-header').forEach(header => {
                         header.classList.remove('expanded');
-                    });
-                    document.querySelectorAll('.collapsible-content').forEach(content => {
-                        content.classList.remove('expanded');
+                        header.nextElementSibling.style.maxHeight = null;
                     });
                     if (!isExpanded) {
                         button.classList.add('expanded');
-                        contentDiv.classList.add('expanded');
+                        contentDiv.style.maxHeight = contentDiv.scrollHeight + "px";
                     }
                 });
             });
         };
 
-        // Render the sections on window load
-        window.onload = renderDSASections;
+        document.addEventListener('DOMContentLoaded', renderDSASections);
     </script>
 </body>
 </html>
