@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scissor Paper Rock</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .spr-container { text-align: center; }
+        .choices { display: flex; justify-content: center; gap: 4rem; margin: 3rem 0; }
+        .choice {
+            font-size: 6rem;
+            cursor: pointer;
+            transition: transform 0.2s, text-shadow 0.2s;
+            padding: 2rem;
+            border-radius: 50%;
+        }
+        .choice:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 20px var(--primary-light);
+        }
+        body.dark-theme .choice:hover {
+            text-shadow: 0 0 20px var(--primary-dark);
+        }
+        .result { font-size: 2.5rem; font-weight: bold; margin-top: 3rem; }
+        .score { font-size: 2rem; margin-top: 1.5rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar glass-effect">
+        <div class="container">
+            <a href="../index.html" class="nav-logo">AKASH</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index.html#experience" class="nav-link">Experience</a></li>
+                <li class="nav-item"><a href="../index.html#certifications" class="nav-link">Certifications</a></li>
+                <li class="nav-item"><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="../index.html#education" class="nav-link">Education</a></li>
+                <li class="nav-item"><a href="interview_prep.html" class="nav-link">Interview Prep</a></li>
+                <li class="nav-item"><a href="DSA.html" class="nav-link">DSA</a></li>
+                <li class="nav-item"><a href="games.html" class="nav-link">Games</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container spr-container">
+        <h2>Scissor, Paper, Rock</h2>
+        <div class="choices glass-effect">
+            <i class="fas fa-hand-scissors choice" data-choice="scissors"></i>
+            <i class="fas fa-hand-paper choice" data-choice="paper"></i>
+            <i class="fas fa-hand-rock choice" data-choice="rock"></i>
+        </div>
+        <div class="result" id="result">Make your choice!</div>
+        <div class="score">
+            Player: <span id="player-score">0</span> | Computer: <span id="computer-score">0</span>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AKASH. All rights reserved.</p>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const choices = document.querySelectorAll('.choice');
+            const resultDiv = document.getElementById('result');
+            const playerScoreSpan = document.getElementById('player-score');
+            const computerScoreSpan = document.getElementById('computer-score');
+
+            let playerScore = 0;
+            let computerScore = 0;
+
+            choices.forEach(choice => {
+                choice.addEventListener('click', () => {
+                    const playerChoice = choice.dataset.choice;
+                    const computerChoice = getComputerChoice();
+                    const winner = getWinner(playerChoice, computerChoice);
+
+                    showResult(playerChoice, computerChoice, winner);
+                    updateScore(winner);
+                });
+            });
+
+            function getComputerChoice() {
+                const choices = ['rock', 'paper', 'scissors'];
+                const randomIndex = Math.floor(Math.random() * 3);
+                return choices[randomIndex];
+            }
+
+            function getWinner(player, computer) {
+                if (player === computer) {
+                    return 'draw';
+                }
+                if (
+                    (player === 'scissors' && computer === 'paper') ||
+                    (player === 'paper' && computer === 'rock') ||
+                    (player === 'rock' && computer === 'scissors')
+                ) {
+                    return 'player';
+                }
+                return 'computer';
+            }
+
+            function showResult(player, computer, winner) {
+                let message = `You chose ${player}, computer chose ${computer}. `;
+                if (winner === 'player') {
+                    message += 'You win!';
+                    resultDiv.style.color = 'var(--md-sys-color-tertiary-light)';
+                } else if (winner === 'computer') {
+                    message += 'You lose!';
+                    resultDiv.style.color = 'var(--md-sys-color-primary-light)';
+                } else {
+                    message += "It's a draw!";
+                    resultDiv.style.color = 'var(--md-sys-color-secondary-light)';
+                }
+                resultDiv.textContent = message;
+            }
+
+            function updateScore(winner) {
+                if (winner === 'player') {
+                    playerScore++;
+                    playerScoreSpan.textContent = playerScore;
+                } else if (winner === 'computer') {
+                    computerScore++;
+                    computerScoreSpan.textContent = computerScore;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
