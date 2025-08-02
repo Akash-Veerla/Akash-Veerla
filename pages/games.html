@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Hub</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .game-card {
+            text-align: center;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 1rem;
+        }
+        .game-card:hover {
+            transform: translateY(-10px);
+        }
+        .game-card i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        .game-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .game-card p {
+            font-size: 1rem;
+        }
+        .game-card.chess-card { background-color: var(--md-sys-color-secondary-container-light); color: var(--md-sys-color-on-secondary-container-light); }
+        body.dark-theme .game-card.chess-card { background-color: var(--md-sys-color-secondary-container-dark); color: var(--md-sys-color-on-secondary-container-dark); }
+
+        .game-card.sudoku-card { background-color: var(--md-sys-color-tertiary-container-light); color: var(--md-sys-color-on-tertiary-container-light); }
+        body.dark-theme .game-card.sudoku-card { background-color: var(--md-sys-color-tertiary-container-dark); color: var(--md-sys-color-on-tertiary-container-dark); }
+
+        .game-card.rps-card { background-color: var(--md-sys-color-quaternary-container-light); color: var(--md-sys-color-on-quaternary-container-light); }
+        body.dark-theme .game-card.rps-card { background-color: var(--md-sys-color-quaternary-container-dark); color: var(--md-sys-color-on-quaternary-container-dark); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="nav-logo">AKASH</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index.html#experience" class="nav-link">Experience</a></li>
+                <li class="nav-item"><a href="../index.html#certifications" class="nav-link">Certifications</a></li>
+                <li class="nav-item"><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="../index.html#education" class="nav-link">Education</a></li>
+                <li class="nav-item"><a href="interview_prep.html" class="nav-link">Interview Prep</a></li>
+                <li class="nav-item"><a href="DSA.html" class="nav-link">DSA</a></li>
+                <li class="nav-item"><a href="games.html" class="nav-link">Games</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h2 class="text-center">Games Hub</h2>
+        <p class="text-center" style="margin-bottom: 3rem;">Select a game to play!</p>
+        <div class="certifications-container">
+            <a href="chess.html" class="game-card chess-card">
+                <i class="fas fa-chess"></i>
+                <h3>Chess</h3>
+                <p>The classic game of strategy.</p>
+            </a>
+            <a href="sudoku.html" class="game-card sudoku-card">
+                <i class="fas fa-border-all"></i>
+                <h3>Sudoku</h3>
+                <p>A puzzle of logic and numbers.</p>
+            </a>
+            <a href="rock-paper-scissors.html" class="game-card rps-card">
+                <i class="fas fa-hand-rock"></i>
+                <h3>Rock Paper Scissors</h3>
+                <p>The timeless game of chance.</p>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AKASH. All rights reserved.</p>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

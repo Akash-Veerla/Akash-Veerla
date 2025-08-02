@@ -1,200 +1,329 @@
-/* General Body Styles */
+/* Material 3 Expressive Color Palette */
+:root {
+    /* Light Theme */
+    --md-sys-color-primary-light: #006C4C;
+    --md-sys-color-on-primary-light: #FFFFFF;
+    --md-sys-color-primary-container-light: #88F8C7;
+    --md-sys-color-on-primary-container-light: #002114;
+    --md-sys-color-secondary-light: #E91E63; /* Pink */
+    --md-sys-color-on-secondary-light: #FFFFFF;
+    --md-sys-color-secondary-container-light: #FFD9E2;
+    --md-sys-color-on-secondary-container-light: #3E001D;
+    --md-sys-color-tertiary-light: #00BCD4; /* Cyan */
+    --md-sys-color-on-tertiary-light: #FFFFFF;
+    --md-sys-color-tertiary-container-light: #B2EBF2;
+    --md-sys-color-on-tertiary-container-light: #001F23;
+    --md-sys-color-quaternary-light: #CDDC39; /* Lime */
+    --md-sys-color-on-quaternary-light: #000000;
+    --md-sys-color-quaternary-container-light: #F0F4C3;
+    --md-sys-color-on-quaternary-container-light: #1A1C00;
+    --md-sys-color-background-light: #F8FDFA;
+    --md-sys-color-on-background-light: #191C1A;
+    --md-sys-color-surface-light: #F8FDFA;
+    --md-sys-color-on-surface-light: #191C1A;
+    --md-sys-color-surface-variant-light: #DCE5DE;
+    --md-sys-color-on-surface-variant-light: #404944;
+    --md-sys-color-outline-light: #707974;
+
+    /* Dark Theme */
+    --md-sys-color-primary-dark: #6ADBAE;
+    --md-sys-color-on-primary-dark: #003826;
+    --md-sys-color-primary-container-dark: #005138;
+    --md-sys-color-on-primary-container-dark: #88F8C7;
+    --md-sys-color-secondary-dark: #FFB0C8;
+    --md-sys-color-on-secondary-dark: #5E1133;
+    --md-sys-color-secondary-container-dark: #7B2949;
+    --md-sys-color-on-secondary-container-dark: #FFD9E2;
+    --md-sys-color-tertiary-dark: #4FD8EB;
+    --md-sys-color-on-tertiary-dark: #00363C;
+    --md-sys-color-tertiary-container-dark: #004F57;
+    --md-sys-color-on-tertiary-container-dark: #97F0FF;
+    --md-sys-color-quaternary-dark: #D4DD53;
+    --md-sys-color-on-quaternary-dark: #2F3200;
+    --md-sys-color-quaternary-container-dark: #454900;
+    --md-sys-color-on-quaternary-container-dark: #F0F4C3;
+    --md-sys-color-background-dark: #191C1A;
+    --md-sys-color-on-background-dark: #E1E3DF;
+    --md-sys-color-surface-dark: #191C1A;
+    --md-sys-color-on-surface-dark: #E1E3DF;
+    --md-sys-color-surface-variant-dark: #404944;
+    --md-sys-color-on-surface-variant-dark: #C0C9C2;
+    --md-sys-color-outline-dark: #8A938D;
+}
+
+/* Base Styles */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #000000;
-    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--md-sys-color-background-light);
+    color: var(--md-sys-color-on-background-light);
     margin: 0;
     padding: 0;
-    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-theme {
+    background-color: var(--md-sys-color-background-dark);
+    color: var(--md-sys-color-on-background-dark);
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 2rem;
 }
 
-h1, h2, h3 {
-    margin-top: 0;
-    font-weight: 600;
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
 }
 
 h2 {
-    text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 3rem;
-    border-bottom: 2px solid #333;
-    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--md-sys-color-primary-light);
+}
+
+body.dark-theme h2 {
+    color: var(--md-sys-color-primary-dark);
 }
 
 a {
-    color: #FFFFFF;
+    color: var(--md-sys-color-primary-light);
     text-decoration: none;
 }
 
+body.dark-theme a {
+    color: var(--md-sys-color-primary-dark);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 4rem;
+    background-color: var(--md-sys-color-surface-variant-light);
+    color: var(--md-sys-color-on-surface-variant-light);
+}
+
+body.dark-theme footer {
+    background-color: var(--md-sys-color-surface-variant-dark);
+    color: var(--md-sys-color-on-surface-variant-dark);
+}
+
+/* Navbar Styles */
+.navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--md-sys-color-outline-light);
+}
+
+body.dark-theme .navbar {
+    border-bottom: 1px solid var(--md-sys-color-outline-dark);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin-left: 2rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--md-sys-color-secondary-light);
+}
+
+body.dark-theme .nav-link:hover {
+    color: var(--md-sys-color-secondary-dark);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--md-sys-color-on-surface-light);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+body.dark-theme .theme-toggle {
+    color: var(--md-sys-color-on-surface-dark);
+}
+
 /* Hero Section */
-.hero {
+#hero {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: #111;
 }
 
 .hero-content h1 {
     font-size: 4rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
 .hero-content p {
     font-size: 1.5rem;
-    color: #ccc;
     margin-bottom: 2rem;
+    color: var(--md-sys-color-on-surface-variant-light);
+}
+
+body.dark-theme .hero-content p {
+    color: var(--md-sys-color-on-surface-variant-dark);
 }
 
 .hero-buttons {
     display: flex;
-    justify-content: center;
     gap: 1rem;
 }
 
-/* Glassmorphism Effect */
-.glass-button, .glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+.glass-button {
+    background: var(--md-sys-color-primary-container-light);
+    color: var(--md-sys-color-on-primary-container-light);
     padding: 1rem 2rem;
-    color: #FFFFFF;
-    font-size: 1rem;
+    border-radius: 2rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+}
+
+body.dark-theme .glass-button {
+    background: var(--md-sys-color-primary-container-dark);
+    color: var(--md-sys-color-on-primary-container-dark);
+}
+
+.glass-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
 
 .glass-button i {
     margin-right: 0.5rem;
 }
 
-.glass-button:hover, .glass-effect:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-5px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+/* Experience Section */
+.experience-container {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding-bottom: 1.5rem;
 }
 
-/* Experience Section - Timeline */
-.timeline {
-    position: relative;
-    max-width: 800px;
-    margin: 0 auto;
+.experience-card {
+    flex: 0 0 320px;
+    background-color: var(--md-sys-color-surface-variant-light);
+    color: var(--md-sys-color-on-surface-variant-light);
+    padding: 2rem;
+    border-radius: 1rem;
 }
 
-.timeline::after {
-    content: '';
-    position: absolute;
-    width: 2px;
-    background-color: #333;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -1px;
+body.dark-theme .experience-card {
+    background-color: var(--md-sys-color-surface-variant-dark);
+    color: var(--md-sys-color-on-surface-variant-dark);
 }
 
-.timeline-item {
-    padding: 1rem 2rem;
-    position: relative;
-    width: 50%;
-}
-
-.timeline-item:nth-child(odd) {
-    left: 0;
-    padding-right: 4rem;
-    text-align: right;
-}
-
-.timeline-item:nth-child(even) {
-    left: 50%;
-    padding-left: 4rem;
-}
-
-
-.timeline-item::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    right: -8px;
-    background-color: #FFFFFF;
-    border: 2px solid #333;
-    top: 25px;
+.company-logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
     border-radius: 50%;
-    z-index: 1;
+    object-fit: contain;
 }
 
-.timeline-item:nth-child(even)::after {
-    left: -8px;
-}
-
-.timeline-content {
-    padding: 1rem;
-    background: #1a1a1a;
-    border-radius: 8px;
-}
-
-.timeline-content h3 {
+.experience-card h3 {
     font-size: 1.5rem;
+    color: var(--md-sys-color-on-surface-light);
+}
+
+body.dark-theme .experience-card h3 {
+    color: var(--md-sys-color-on-surface-dark);
+}
+
+.experience-card .organization {
+    font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
-.timeline-content .organization {
-    font-weight: bold;
-    color: #ccc;
-}
-
-.timeline-content .location {
+.experience-card .location {
     font-style: italic;
-    color: #999;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
-
-.timeline-content .description {
-    color: #bbb;
-}
-
 
 /* Certifications Section */
-.grid-layout {
+.certifications-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
 
-.card {
+.certification-card {
+    background-color: var(--md-sys-color-surface-light);
+    color: var(--md-sys-color-on-surface-light);
     padding: 2rem;
-    text-align: center;
+    border-radius: 1rem;
+    border: 1px solid var(--md-sys-color-outline-light);
 }
 
-.card h3 {
-    font-size: 1.5rem;
+body.dark-theme .certification-card {
+    background-color: var(--md-sys-color-surface-dark);
+    color: var(--md-sys-color-on-surface-dark);
+    border: 1px solid var(--md-sys-color-outline-dark);
+}
+
+.cert-logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    object-fit: contain;
+}
+
+.certification-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.certification-card .organization {
+    font-weight: 500;
+    color: var(--md-sys-color-secondary-light);
     margin-bottom: 1rem;
 }
 
-.card p {
-    color: #ccc;
+body.dark-theme .certification-card .organization {
+    color: var(--md-sys-color-secondary-dark);
 }
-.card .description {
-    font-size: 0.9rem;
-    color: #bbb;
-    margin-top: 1rem;
-}
-
 
 /* Skills Section */
-.skills-layout {
+.skills-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 3rem;
 }
 
@@ -205,58 +334,46 @@ a {
 .skills-category h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
+    color: var(--md-sys-color-tertiary-light);
+}
+
+body.dark-theme .skills-category h3 {
+    color: var(--md-sys-color-tertiary-dark);
+}
+
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .skill-tag {
-    display: inline-block;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--md-sys-color-quaternary-container-light);
+    color: var(--md-sys-color-on-quaternary-container-light);
     padding: 0.5rem 1rem;
-    border-radius: 5px;
-    margin: 0.25rem;
-    font-size: 0.9rem;
+    border-radius: 1rem;
+}
+
+body.dark-theme .skill-tag {
+    background-color: var(--md-sys-color-quaternary-container-dark);
+    color: var(--md-sys-color-on-quaternary-container-dark);
 }
 
 /* Education Section */
 .education-content {
     text-align: center;
+}
+
+.education-content h3 {
+    font-size: 1.5rem;
+}
+
+.education-content p {
     font-size: 1.2rem;
+    color: var(--md-sys-color-on-surface-variant-light);
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 2rem 0;
-    background-color: #111;
-    color: #888;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 3rem;
-    }
-    .hero-content p {
-        font-size: 1.2rem;
-    }
-
-    .timeline::after {
-        left: 20px;
-    }
-
-    .timeline-item {
-        width: 100%;
-        padding-left: 50px;
-        padding-right: 1rem;
-    }
-
-    .timeline-item:nth-child(odd), .timeline-item:nth-child(even) {
-        left: 0;
-        text-align: left;
-        padding-left: 50px;
-    }
-
-    .timeline-item::after {
-        left: 12px;
-    }
+body.dark-theme .education-content p {
+    color: var(--md-sys-color-on-surface-variant-dark);
 }
